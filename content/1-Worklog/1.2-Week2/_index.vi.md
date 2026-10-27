@@ -1,5 +1,5 @@
 ---
-title: "Week 2 Worklog"
+title: "Worklog Tuần 2"
 date: 2026-09-21
 weight: 2
 chapter: false
@@ -224,9 +224,11 @@ ping 10.0.2.214
 | Lambda@Edge không hiển thị tùy chọn trigger CloudFront | Lambda function không nằm tại Region `us-east-1` (N. Virginia) | Lambda@Edge yêu cầu khởi tạo tại region `us-east-1` và cần gán IAM Role có quyền trust `edgelambda.amazonaws.com` |
 | Ping giữa 2 subnet trong cùng VPC bị timeout | Security Group của máy đích chưa mở giao thức ICMP | Mở rule `All ICMP - IPv4` trong Inbound rules của Security Group máy đích với nguồn từ Subnet nội bộ |
 
-### Kế hoạch tuần 3
+### Kế hoạch tuần 3: Database & Scale
 
-- Tìm hiểu và triển khai Elastic Load Balancing (Application Load Balancer - ALB).
-- Cấu hình Auto Scaling Group (ASG) tự động co giãn tài nguyên theo tải CPU.
-- Thiết lập Health Check và Target Groups phân phối lưu lượng truy cập.
-- Tìm hiểu cơ chế giám sát và cảnh báo hệ thống với Amazon CloudWatch Alarms.
+- Khởi tạo cơ sở dữ liệu quan hệ Amazon RDS (MySQL), cấu hình Multi-AZ và kết nối từ EC2.
+- Tạo bảng NoSQL trên Amazon DynamoDB, tối ưu khóa phân vùng (Partition Key) và thực hành truy vấn Scan vs Query.
+- Thiết lập cụm bộ nhớ đệm Amazon ElastiCache (Redis) giảm tải cho Database.
+- Tạo Launch Template và cấu hình EC2 Auto Scaling Group.
+- Triển khai Application Load Balancer (ALB) phân phối lưu lượng truy cập Multi-AZ.
+- Dựng kiến trúc High Availability hoàn chỉnh (ALB + Auto Scaling EC2 + RDS) và kiểm chứng Self-Healing.

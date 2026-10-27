@@ -1,5 +1,5 @@
 ---
-title: "Week 3 Worklog"
+title: "Worklog Tuần 3"
 date: 2026-09-28
 weight: 3
 chapter: false
@@ -182,7 +182,7 @@ Sau khi hoàn tất quá trình kiểm thử kiến trúc High Availability, ti�
 | Load Balancer báo Target unhealthy (Health Check Failed) | Web server trên EC2 chưa khởi động hoặc chưa mở port 80 trong Security Group | Kiểm tra trạng thái service Apache (`sudo systemctl status httpd`) và mở Inbound port 80 cho Security Group của EC2 từ ALB |
 | Instance thay thế trong Auto Scaling không tự động chạy web server | Launch Template chưa gắn User Data script cài đặt web | Bổ sung script `yum install -y httpd` trong phần User Data của Launch Template để tự động hóa hoàn toàn |
 
-### Kế hoạch tuần 4
+### Kế hoạch tuần 4: Serverless & Application Integration
 
 - Tìm hiểu kiến trúc Serverless với AWS Lambda và Amazon API Gateway.
 - Xây dựng mô hình kiến trúc hướng sự kiện (Event-Driven Architecture) với Amazon SNS và Amazon SQS.

@@ -1,5 +1,5 @@
 ---
-title: "Worklog Week 2"
+title: "Week 2 Worklog"
 date: 2026-09-21
 weight: 2
 chapter: false
@@ -15,9 +15,9 @@ pre: " <b> 1.2. </b> "
 - **Lambda@Edge:** Author Lambda functions intercepting viewer requests/responses at Edge Locations, injecting HTTP Security Headers.
 - **Comprehensive Lab 2:** Build a secure multi-tier web architecture: Web server (Public Subnet) communicating securely with backend instances (Private Subnet).
 
-### Tasks to be completed this week
+### Tasks Planned for This Week
 
-| Day | Topic | Task Details | Start Date | Completion Date | Reference Materials |
+| Day | Topic | Task | Start Date | End Date | Reference |
 | :---: | :--- | :--- | :---: | :---: | :--- |
 | **Mon** | **Amazon VPC Fundamentals** | Initialize VPC, configure IPv4 CIDR, segment Public and Private Subnets | 21/09/2026 | 21/09/2026 | [Amazon VPC](https://docs.aws.amazon.com/vpc/) |
 | **Tue** | **Routing & NAT** | Configure Route Tables, Internet Gateway (IGW), and NAT Gateway for Private Subnet | 22/09/2026 | 22/09/2026 | [AWS NAT Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) |
@@ -26,7 +26,7 @@ pre: " <b> 1.2. </b> "
 | **Fri** | **Lambda@Edge** | Author Lambda script intercepting requests/responses at Edge Locations | 25/09/2026 | 25/09/2026 | [Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html) |
 | **Sat** | **Comprehensive Lab 2** | Deploy web architecture: Web server (Public Subnet) securely communicating with Private Subnet | 26/09/2026 | 26/09/2026 | [AWS Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) |
 
-### Week 2 Key Accomplishments
+### Week 2 Results
 
 - Successfully initialized custom VPC (`My-Lab-VPC`), allocated IPv4 CIDR, and partitioned distinct `Public-subnet` and `Private-subnet`.
 - Configured dynamic routing: attached Internet Gateway (IGW) to `Public-RT` and configured default egress `0.0.0.0/0` via NAT Gateway (`LabT3-NAT`) on `Private-RT`.
@@ -214,7 +214,7 @@ ping 10.0.2.214
 
 ---
 
-#### Troubleshooting & Challenges Encountered
+#### Challenges Encountered
 
 | Issue | Root Cause | Resolution |
 | :--- | :--- | :--- |

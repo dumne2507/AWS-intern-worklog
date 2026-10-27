@@ -6,49 +6,48 @@ chapter: false
 pre: " <b> 1.2. </b> "
 ---
 
-## Week 2 Objectives
+## Week 2 Objectives: Networking & CDN
 
-- Master VPC networking fundamentals: Custom VPC, Public Subnet, Private Subnet, Internet Gateway, and Route Tables.
-- Deploy virtual servers in Public and Private Subnets, verifying network isolation and security boundaries.
-- Configure advanced routing with NAT Gateway and Elastic IP to grant outbound-only internet connectivity for private workloads.
-- Learn and practice DNS management with Amazon Route 53: Create a Public Hosted Zone, configure A records, and verify resolution using `nslookup`.
-- Set up global content acceleration using Amazon CloudFront CDN integrated with an Amazon S3 Bucket Origin.
-- Implement Edge Computing security with Lambda@Edge: Author Node.js functions, configure IAM execution roles, and inject HTTP Security Headers on Viewer Response events.
-- Implement multi-tier Security Group architectures: Verify inter-subnet communication (ICMP ping, SSH) via Bastion Host / Web Server.
+- **Amazon VPC Fundamentals:** Initialize VPC, configure IPv4 CIDR blocks, and segment isolated Public and Private Subnets.
+- **Routing & NAT:** Master route tables, attach an Internet Gateway (IGW) for public ingress/egress, and provision a NAT Gateway for private egress.
+- **Amazon Route 53:** Manage DNS records, create a Public Hosted Zone, and map domain A records to EC2 instance IP addresses.
+- **CloudFront:** Deploy a Content Delivery Network (CDN), configure S3 as Origin storage, and accelerate content delivery via global Edge Locations.
+- **Lambda@Edge:** Author Lambda functions intercepting viewer requests/responses at Edge Locations, injecting HTTP Security Headers.
+- **Comprehensive Lab 2:** Build a secure multi-tier web architecture: Web server (Public Subnet) communicating securely with backend instances (Private Subnet).
 
 ### Tasks to be completed this week
 
 | Day | Topic | Task Details | Start Date | Completion Date | Reference Materials |
-| --- | --- | --- | --- | --- | --- |
-| Mon | VPC Basics | Create Custom VPC (`My-Lab-VPC`), Public & Private Subnets, deploy Web Server on Public Subnet and EC2 on Private Subnet | 21/09/2026 | 21/09/2026 | [Amazon VPC](https://docs.aws.amazon.com/vpc/) |
-| Tue | Route Table & NAT Gateway | Configure Route Tables (`Public-RT`, `Private-RT`), provision NAT Gateway with Elastic IP for private outbound internet access | 22/09/2026 | 22/09/2026 | [AWS NAT Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) |
-| Wed | Amazon Route 53 | Create Public Hosted Zone `labt4-thuchanh.com`, configure A Record pointing to EC2 IP, verify DNS with `nslookup` | 23/09/2026 | 23/09/2026 | [Amazon Route 53](https://docs.aws.amazon.com/route53/) |
-| Thu | Amazon CloudFront | Provision CloudFront CDN Distribution with S3 Origin `bucketlabt5`, accelerate static content delivery via Edge Locations | 24/09/2026 | 24/09/2026 | [Amazon CloudFront](https://docs.aws.amazon.com/cloudfront/) |
-| Fri | Lambda@Edge & Security | Implement Lambda@Edge function injecting Security Headers (`X-Frame-Options`, `X-Fpt-Sec-Lab`), triggered on Viewer Response | 25/09/2026 | 25/09/2026 | [Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html) |
-| Sat | Networking & Security Lab | Configure tiered Security Groups (`Web-SG`, `Private-SG`), verify inter-subnet connectivity (Ping, SSH) between subnets | 26/09/2026 | 26/09/2026 | [AWS Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) |
+| :---: | :--- | :--- | :---: | :---: | :--- |
+| **Mon** | **Amazon VPC Fundamentals** | Initialize VPC, configure IPv4 CIDR, segment Public and Private Subnets | 21/09/2026 | 21/09/2026 | [Amazon VPC](https://docs.aws.amazon.com/vpc/) |
+| **Tue** | **Routing & NAT** | Configure Route Tables, Internet Gateway (IGW), and NAT Gateway for Private Subnet | 22/09/2026 | 22/09/2026 | [AWS NAT Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) |
+| **Wed** | **Amazon Route 53** | Manage DNS, create Hosted Zone, point A Record to EC2 IP address | 23/09/2026 | 23/09/2026 | [Amazon Route 53](https://docs.aws.amazon.com/route53/) |
+| **Thu** | **CloudFront** | Provision CDN, configure S3 Origin to accelerate page loading | 24/09/2026 | 24/09/2026 | [Amazon CloudFront](https://docs.aws.amazon.com/cloudfront/) |
+| **Fri** | **Lambda@Edge** | Author Lambda script intercepting requests/responses at Edge Locations | 25/09/2026 | 25/09/2026 | [Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html) |
+| **Sat** | **Comprehensive Lab 2** | Deploy web architecture: Web server (Public Subnet) securely communicating with Private Subnet | 26/09/2026 | 26/09/2026 | [AWS Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) |
 
 ### Week 2 Key Accomplishments
 
-- Successfully architected a multi-tier VPC containing isolated Public and Private Subnets with verified boundary enforcement.
-- Configured bidirectional routing via Internet Gateway and egress-only internet connectivity via NAT Gateway and Elastic IP.
-- Managed DNS routing using Amazon Route 53, pointing custom domain A records to live EC2 instances and validating DNS responses.
-- Accelerated static website content delivery across global Edge Locations using Amazon CloudFront backed by Amazon S3 storage.
-- Enforced edge-layer defense-in-depth security with Lambda@Edge, dynamically injecting HTTP security headers into viewer responses.
-- Established least-privilege firewall rules with tiered Security Groups, strictly regulating inbound and outbound inter-subnet traffic.
+- Successfully initialized custom VPC (`My-Lab-VPC`), allocated IPv4 CIDR, and partitioned distinct `Public-subnet` and `Private-subnet`.
+- Configured dynamic routing: attached Internet Gateway (IGW) to `Public-RT` and configured default egress `0.0.0.0/0` via NAT Gateway (`LabT3-NAT`) on `Private-RT`.
+- Managed DNS routing with Amazon Route 53: created Public Hosted Zone `labt4-thuchanh.com`, mapped A Record to EC2 instance IP `98.86.220.109`, verified resolution using `nslookup`.
+- Deployed global content caching with CloudFront Distribution (`d2vfkjpwxqkl8v.cloudfront.net`) backed by S3 Origin `bucketlabt5`, delivering low latency content.
+- Implemented edge compute with Lambda@Edge: wrote Node.js 24.x handler bound to CloudFront `Viewer response` trigger, injecting HTTP Security Headers (`X-Frame-Options: DENY`, `X-Fpt-Sec-Lab: Hoan-thanh-Lab-T6`).
+- Successfully completed Comprehensive Lab 2: designed tiered Security Groups (`Web-SG`, `Private-SG`), verifying internal inter-subnet ICMP reachability (`10.0.2.214`) at ~0.3ms latency without exposing private assets to the public internet.
 
 ---
 
-#### Exercise 1: VPC Networking Fundamentals — Public & Private Subnets
+#### Exercise 1: Amazon VPC Fundamentals — VPC Initialization, IPv4 CIDR & Subnet Segmentation
 
-Created a dedicated custom Virtual Private Cloud (VPC) named **`My-Lab-VPC`**. Inside this VPC, two isolated subnets were provisioned:
-- `Public-subnet`: Attached to an Internet Gateway for public-facing workloads.
-- `Private-subnet`: Completely isolated from external ingress traffic for secure internal workloads.
+Created a dedicated custom Virtual Private Cloud (VPC) named **`My-Lab-VPC`**. Inside this VPC, partitioned IPv4 CIDR block into two isolated subnets:
+- `Public-subnet`: Associated with an Internet Gateway, receiving external incoming user traffic.
+- `Private-subnet`: Completely isolated from direct internet ingress, reserved for backend databases and services.
 
 Launched an Apache web server on `Public-subnet` assigned with Public IPv4 `13.223.85.49`. Accessing the public IP via web browser displayed the welcome page: *"Chao mung den voi Web Server tren VPC rieng! - Manhdung2507"*.
 
 > **Screenshot:** ![Web Server on Public Subnet within Custom VPC](/images/1-Worklog/week-02/01-vpc-web-server-public.png)
 
-Provisioned a second EC2 instance named **`Test-Private-EC2`** (`i-0a2a4b868f760e445`) inside the `Private-subnet`. This instance is allocated only an internal Private IPv4 address (`10.0.2.91`), with no public IPv4 or elastic IP.
+Provisioned a second EC2 instance named **`Test-Private-EC2`** (`i-0a2a4b868f760e445`) inside the `Private-subnet`. This instance is allocated only an internal Private IPv4 address (`10.0.2.91`), with no public IPv4 address.
 
 > **Screenshot:** ![EC2 Instance Details in Private Subnet](/images/1-Worklog/week-02/02-private-ec2-instance.png)
 
@@ -58,7 +57,7 @@ Conducted network isolation verification: Attempted direct HTTP access from the 
 
 ---
 
-#### Exercise 2: Advanced Routing with Route Tables & NAT Gateway
+#### Exercise 2: Routing & NAT — Route Tables, Internet Gateway (IGW) & NAT Gateway
 
 Created and managed custom routing tables for VPC network traffic. Established **`Private-RT`** (`rtb-05b1c5a9be77d018d`) dedicated to private resources in `LabT3-VPC`.
 
@@ -91,7 +90,7 @@ curl -I https://aws.amazon.com
 
 ---
 
-#### Exercise 3: Amazon Route 53 — DNS Management & Domain Routing
+#### Exercise 3: Amazon Route 53 — DNS Management, Hosted Zone & A Record
 
 Launched a test EC2 instance **`LabT4-Test`** (`i-0a86d42df283fe32e`) assigned with Public IPv4 `98.86.220.109`.
 
@@ -122,13 +121,13 @@ The lookup resolved to the expected IPv4 address `98.86.220.109`, confirming pro
 
 ---
 
-#### Exercise 4: Amazon CloudFront — Content Delivery Network (CDN)
+#### Exercise 4: CloudFront — CDN Deployment & S3 Origin Page Load Acceleration
 
 Provisioned an **Amazon CloudFront Distribution** named **`Labt5`** (Distribution ID: `E3G4O9N747F2M4`). CloudFront assigned the global distribution domain name `d2vfkjpwxqkl8v.cloudfront.net` with status **Enabled**.
 
 > **Screenshot:** ![CloudFront Distribution Provisioned and Enabled](/images/1-Worklog/week-02/13-cloudfront-distribution.png)
 
-Created S3 Bucket **`bucketlabt5`** (`arn:aws:s3:::bucketlabt5`) in Region `us-east-1` configured as the Origin storage for the CloudFront distribution.
+Created S3 Bucket **`bucketlabt5`** (`arn:aws:s3:::bucketlabt5`) in Region `us-east-1` configured as the Origin storage for the CloudFront distribution to accelerate static page delivery.
 
 > **Screenshot:** ![S3 Bucket Configured as CloudFront Origin](/images/1-Worklog/week-02/14-s3-bucket-cloudfront.png)
 
@@ -142,7 +141,7 @@ Accessed the static site via the global CloudFront edge URL `https://d2vfkjpwxqk
 
 ---
 
-#### Exercise 5: Lambda@Edge — Edge Computing & HTTP Security Headers
+#### Exercise 5: Lambda@Edge — Intercepting Requests/Responses at Edge Locations
 
 Created a serverless function named **`Edge-Security-Header`** running on `Node.js 24.x` with `x86_64` architecture in Region `us-east-1` (the mandatory region for Lambda@Edge distributions).
 
@@ -156,7 +155,7 @@ Configured permissions via IAM Policy Statement Editor, ensuring CloudWatch Logs
 
 > **Screenshot:** ![IAM Policy Statement Editor Configuration](/images/1-Worklog/week-02/19-lambda-policy-statement.png)
 
-Authored Node.js logic to inject HTTP Security Headers and configured the CloudFront trigger:
+Authored Node.js logic to intercept responses and inject HTTP Security Headers; configured the CloudFront trigger:
 - **Distribution:** `E3G4O9N747F2M4` (CloudFront)
 - **CloudFront event:** `Viewer response`
 - Deployed a published version to Lambda@Edge.
@@ -166,7 +165,7 @@ export const handler = async (event) => {
     const response = event.Records[0].cf.response;
     const headers = response.headers;
 
-    // Inject HTTP Security Headers
+    // Intercept and inject HTTP Security Headers
     headers['strict-transport-security'] = [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubdomains; preload' }];
     headers['x-content-type-options'] = [{ key: 'X-Content-Type-Options', value: 'nosniff' }];
     headers['x-frame-options'] = [{ key: 'X-Frame-Options', value: 'DENY' }];
@@ -185,7 +184,7 @@ Inspected HTTP Response Headers using browser DevTools (Network tab) when reques
 
 ---
 
-#### Exercise 6: Comprehensive Networking Lab — Tiered Security Groups & Inter-Subnet Testing
+#### Exercise 6: Comprehensive Lab 2 — Web Architecture: Web Server (Public) & Secure Communication (Private)
 
 Configured Security Group for the public web tier named **`Web-SG`** in VPC `Mylabt7`, opening ingress rules for client traffic:
 - **HTTP (TCP 80)**: Source `0.0.0.0/0`
@@ -194,13 +193,13 @@ Configured Security Group for the public web tier named **`Web-SG`** in VPC `Myl
 
 > **Screenshot:** ![Web-SG Security Group Inbound Rules](/images/1-Worklog/week-02/22-security-group-web-sg.png)
 
-Configured Security Group for backend private instances **`Private-SG`** (`sg-00f606d0da92bd89c`). For strict isolation, Inbound rules permitted only:
-- **All ICMP - IPv4**: Network reachability checks.
-- **SSH (TCP 22)**: Administrative jump connection originating from the public subnet.
+Configured Security Group for backend private instances **`Private-SG`** (`sg-00f606d0da92bd89c`). For strict isolation, Inbound rules permitted only internal communication:
+- **All ICMP - IPv4**: Network reachability checks within internal subnet.
+- **SSH (TCP 22)**: Secure administrative access originating from the Web Server (Bastion Host) in the Public Subnet.
 
 > **Screenshot:** ![Private-SG Inbound Rules Configuration](/images/1-Worklog/week-02/24-private-security-group-rules.png)
 
-Executed Inter-Subnet Connectivity Verification: Connected to public instance **`LabT7-Web-Server`** (`10.0.1.123`) via EC2 Instance Connect and initiated an ICMP `ping` toward private instance `10.0.2.214`. Packet transmission succeeded with ~0.3ms latency, proving seamless intra-VPC routing and correct Security Group rule evaluation.
+Executed Inter-Subnet Connectivity Verification: Connected to public instance **`LabT7-Web-Server`** (`10.0.1.123`) via EC2 Instance Connect and initiated an ICMP `ping` toward private instance `10.0.2.214`. Packet transmission succeeded with ~0.3ms latency, demonstrating secure multi-tier networking and proper Security Group rule enforcement.
 
 ```bash
 # Ping private backend instance from public web server

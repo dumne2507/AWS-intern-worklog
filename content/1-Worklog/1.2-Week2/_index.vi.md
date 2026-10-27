@@ -6,61 +6,60 @@ chapter: false
 pre: " <b> 1.2. </b> "
 ---
 
-## Mục tiêu tuần 2
+## Mục tiêu tuần 2: Mạng & CDN
 
-- Nắm vững kiến trúc mạng VPC: Custom VPC, Public Subnet, Private Subnet, Internet Gateway và Route Table.
-- Triển khai máy chủ trong Public Subnet và Private Subnet, kiểm chứng tính cô lập bảo mật của Private Subnet.
-- Cấu hình định tuyến nâng cao với NAT Gateway và Elastic IP, cho phép Private Subnet kết nối Internet một chiều.
-- Tìm hiểu và thực hành dịch vụ DNS Amazon Route 53: Tạo Public Hosted Zone, tạo A record và kiểm chứng phân giải tên miền với `nslookup`.
-- Thiết lập phân phối nội dung toàn cầu qua Amazon CloudFront CDN kết nối S3 Bucket Origin.
-- Tối ưu bảo mật mạng Edge với Lambda@Edge: Triển khai hàm Lambda Node.js, cấu hình IAM Role, trigger Viewer Response để chèn HTTP Security Headers.
-- Thực hành nâng cao về Security Group: Thiết lập Security Group nhiều tầng, kiểm thử kết nối nội bộ (inter-subnet ICMP/SSH) qua Bastion host / Web Server.
+- **Amazon VPC Cơ bản:** Khởi tạo VPC, cấu hình dải địa chỉ IPv4 CIDR, phân chia rõ ràng Public Subnet và Private Subnet.
+- **Routing & NAT:** Nắm vững cơ chế bảng định tuyến (Route Table), gắn Internet Gateway (IGW) cho traffic công cộng và cấp NAT Gateway cho Private Subnet.
+- **Amazon Route 53:** Quản lý hệ thống phân giải tên miền DNS, tạo Public Hosted Zone, trỏ bản ghi A Record về địa chỉ IP của EC2.
+- **CloudFront:** Khởi tạo mạng phân phối nội dung (CDN), cấu hình Origin là S3 Bucket nhằm tăng tốc độ tải trang web qua Edge Locations.
+- **Lambda@Edge:** Viết mã nguồn Lambda cơ bản can thiệp vào request/response tại các trạm biên (Edge Locations), chèn các HTTP Security Headers.
+- **Lab Tổng hợp 2:** Dựng kiến trúc web nhiều tầng: Web server (Public Subnet) giao tiếp an toàn với máy chủ nội bộ (Private Subnet) qua Security Groups.
 
 ### Các công việc cần triển khai trong tuần này
 
 | Thứ | Chủ đề | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
-| --- | --- | --- | --- | --- | --- |
-| 2 | VPC Cơ bản | Tạo Custom VPC (`My-Lab-VPC`), Public & Private Subnet, triển khai Web Server trên Public Subnet và EC2 trên Private Subnet | 21/09/2026 | 21/09/2026 | [Amazon VPC](https://docs.aws.amazon.com/vpc/) |
-| 3 | Route Table & NAT Gateway | Cấu hình Route Table (`Public-RT`, `Private-RT`), tạo NAT Gateway gắn Elastic IP cho phép Private Subnet ra ngoài Internet | 22/09/2026 | 22/09/2026 | [AWS NAT Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) |
-| 4 | Amazon Route 53 | Tạo Public Hosted Zone `labt4-thuchanh.com`, tạo A record trỏ về IP EC2, kiểm chứng phân giải DNS với `nslookup` | 23/09/2026 | 23/09/2026 | [Amazon Route 53](https://docs.aws.amazon.com/route53/) |
-| 5 | Amazon CloudFront | Tạo CloudFront Distribution kết nối Origin S3 `bucketlabt5`, phân phối website tĩnh tốc độ cao qua Edge Locations | 24/09/2026 | 24/09/2026 | [Amazon CloudFront](https://docs.aws.amazon.com/cloudfront/) |
-| 6 | Lambda@Edge & Security | Viết hàm Lambda@Edge chèn Security Headers (`X-Frame-Options`, `X-Fpt-Sec-Lab`), kích hoạt qua CloudFront Viewer Response | 25/09/2026 | 25/09/2026 | [Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html) |
-| 7 | Lab Tổng hợp Mạng & Bảo mật | Thiết lập Security Group phân tầng (`Web-SG`, `Private-SG`), kiểm thử kết nối nội bộ (Ping, SSH) giữa Public và Private Subnet | 26/09/2026 | 26/09/2026 | [AWS Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) |
+| :---: | :--- | :--- | :---: | :---: | :--- |
+| **2** | **Amazon VPC Cơ bản** | Khởi tạo VPC, cấu hình IPv4 CIDR, chia Public và Private Subnet | 21/09/2026 | 21/09/2026 | [Amazon VPC](https://docs.aws.amazon.com/vpc/) |
+| **3** | **Routing & NAT** | Cấu hình Route Table, Internet Gateway (IGW) và NAT Gateway cho Private Subnet | 22/09/2026 | 22/09/2026 | [AWS NAT Gateway](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html) |
+| **4** | **Amazon Route 53** | Quản lý DNS, tạo Hosted Zone, trỏ bản ghi A Record về IP của EC2 | 23/09/2026 | 23/09/2026 | [Amazon Route 53](https://docs.aws.amazon.com/route53/) |
+| **5** | **CloudFront** | Khởi tạo CDN, cấu hình Origin là S3 để tăng tốc tải trang | 24/09/2026 | 24/09/2026 | [Amazon CloudFront](https://docs.aws.amazon.com/cloudfront/) |
+| **6** | **Lambda@Edge** | Viết script Lambda cơ bản can thiệp vào request/response tại các Edge Locations | 25/09/2026 | 25/09/2026 | [Lambda@Edge](https://docs.aws.amazon.com/lambda/latest/dg/lambda-edge.html) |
+| **7** | **Lab Tổng hợp 2** | Dựng kiến trúc web: Web server (Public Subnet) giao tiếp an toàn (Private Subnet) | 26/09/2026 | 26/09/2026 | [AWS Security Groups](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html) |
 
 ### Kết quả đạt được tuần 2
 
-- Xây dựng thành công kiến trúc VPC đa tầng gồm Public Subnet và Private Subnet, kiểm chứng phân tách mạng độc lập.
-- Thiết lập hoàn chỉnh định tuyến với Internet Gateway và NAT Gateway, kiểm soát luồng traffic ra/vào mạng nội bộ an toàn.
-- Cấu hình DNS Server với Amazon Route 53, gán bản ghi tên miền vào máy chủ EC2 thực tế và xác minh truy vấn DNS thành công.
-- Tối ưu tốc độ tải trang web thông qua mạng phân phối nội dung toàn cầu Amazon CloudFront với S3 Origin.
-- Nâng cao tính bảo mật bằng điện toán biên Lambda@Edge, tự động tiêm các HTTP Security Headers vào response trả về cho client.
-- Thiết lập quy tắc tường lửa phân tầng Security Group, cho phép kiểm soát truy cập chặt chẽ giữa các thành phần Public Web và Private Backend.
+- Khởi tạo thành công VPC tùy chỉnh (`My-Lab-VPC`), cấu hình IPv4 CIDR, phân tách rõ ràng `Public-subnet` và `Private-subnet`.
+- Thiết lập định tuyến hoàn chỉnh: cấu hình `Public-RT` gắn Internet Gateway (IGW) và `Private-RT` trỏ `0.0.0.0/0` qua NAT Gateway (`LabT3-NAT`) gắn Elastic IP, bảo đảm Private Subnet ra ngoài Internet an toàn.
+- Làm chủ Amazon Route 53: khởi tạo Public Hosted Zone `labt4-thuchanh.com`, tạo bản ghi A Record trỏ chính xác về địa chỉ IPv4 máy chủ EC2 `98.86.220.109`, xác minh truy vấn qua `nslookup`.
+- Triển khai phân phối nội dung toàn cầu với CloudFront Distribution (`d2vfkjpwxqkl8v.cloudfront.net`) liên kết S3 Origin `bucketlabt5`, website tải trang tức thì qua Edge Locations.
+- Áp dụng điện toán biên Lambda@Edge: viết hàm Node.js 24.x can thiệp vào sự kiện `Viewer response`, tự động chèn các HTTP Security Headers (`X-Frame-Options: DENY`, `X-Fpt-Sec-Lab: Hoan-thanh-Lab-T6`).
+- Hoàn thành xuất sắc Lab Tổng hợp 2: xây dựng mô hình mạng phân tầng, thiết lập Security Groups (`Web-SG`, `Private-SG`), kiểm thử ICMP Ping nội bộ thành công từ Web Server sang Private EC2 (`10.0.2.214`) với độ trễ siêu thấp ~0.3ms.
 
 ---
 
-#### Bài tập 1: Kiến trúc VPC cơ bản — Public & Private Subnet
+#### Bài tập 1: Amazon VPC Cơ bản — Khởi tạo VPC, IPv4 CIDR & Phân chia Subnet
 
-Khởi tạo một Virtual Private Cloud (VPC) tùy chỉnh mang tên **`My-Lab-VPC`**. Trong VPC này, chia tách 2 Subnet độc lập:
-- `Public-subnet`: Kết nối với Internet Gateway, dành cho các tài nguyên phục vụ công cộng.
-- `Private-subnet`: Hoàn toàn cách ly với Internet bên ngoài, dành cho các tài nguyên bảo mật nội bộ.
+Khởi tạo một Virtual Private Cloud (VPC) tùy chỉnh mang tên **`My-Lab-VPC`**. Trong VPC này, phân chia không gian địa chỉ IPv4 CIDR thành 2 Subnet độc lập:
+- `Public-subnet`: Kết nối với Internet Gateway, dành cho các dịch vụ đón nhận truy cập công cộng.
+- `Private-subnet`: Hoàn toàn cách ly khỏi Internet bên ngoài, dành cho cơ sở dữ liệu và máy chủ nội bộ.
 
 Khởi chạy máy chủ Web Server trên `Public-subnet` và gán Public IPv4 `13.223.85.49`. Truy cập qua trình duyệt web hiển thị trang chào mừng: *"Chao mung den voi Web Server tren VPC rieng! - Manhdung2507"*.
 
 > **Screenshot:** ![Web Server trên Public Subnet của Custom VPC](/images/1-Worklog/week-02/01-vpc-web-server-public.png)
 
-Khởi chạy máy chủ ảo thứ hai **`Test-Private-EC2`** (`i-0a2a4b868f760e445`) bên trong `Private-subnet`. Instance này chỉ sở hữu địa chỉ Private IPv4 (`10.0.2.91`), hoàn toàn không có Public IPv4.
+Khởi chạy máy chủ ảo thứ hai mang tên **`Test-Private-EC2`** (`i-0a2a4b868f760e445`) bên trong `Private-subnet`. Instance này chỉ sở hữu địa chỉ Private IPv4 (`10.0.2.91`), hoàn toàn không được cấp Public IPv4.
 
 > **Screenshot:** ![Chi tiết EC2 trong Private Subnet](/images/1-Worklog/week-02/02-private-ec2-instance.png)
 
-Tiến hành kiểm chứng bảo mật: Cố gắng truy cập trực tiếp từ trình duyệt Internet tới địa chỉ Private IP `10.0.2.91`. Trình duyệt báo lỗi **`ERR_CONNECTION_TIMED_OUT`** ("This site can't be reached"). Điều này chứng minh rằng máy chủ trong Private Subnet được bảo vệ an toàn và không thể bị dò quét hay tấn công trực tiếp từ Internet.
+Tiến hành kiểm chứng tính cô lập bảo mật: Cố gắng truy cập trực tiếp từ trình duyệt Internet tới địa chỉ Private IP `10.0.2.91`. Trình duyệt báo lỗi **`ERR_CONNECTION_TIMED_OUT`** ("This site can't be reached"). Điều này chứng minh máy chủ trong Private Subnet được bảo vệ an toàn, không thể bị quét cổng hay tấn công trực tiếp từ bên ngoài.
 
 > **Screenshot:** ![Kiểm chứng không thể truy cập Private Subnet từ Internet](/images/1-Worklog/week-02/03-private-ec2-connection-timeout.png)
 
 ---
 
-#### Bài tập 2: Định tuyến mạng với Route Table & NAT Gateway
+#### Bài tập 2: Routing & NAT — Route Table, Internet Gateway (IGW) & NAT Gateway
 
-Khởi tạo và quản lý bảng định tuyến cho hệ thống mạng. Tạo **`Private-RT`** (`rtb-05b1c5a9be77d018d`) dành riêng cho các tài nguyên nội bộ thuộc `LabT3-VPC`.
+Khởi tạo và quản lý bảng định tuyến mạng. Tạo **`Private-RT`** (`rtb-05b1c5a9be77d018d`) dành riêng cho các tài nguyên nội bộ thuộc `LabT3-VPC`.
 
 > **Screenshot:** ![Bảng định tuyến Private Route Table](/images/1-Worklog/week-02/04-private-route-table.png)
 
@@ -70,18 +69,18 @@ Phân chia dải địa chỉ mạng con (Subnets) trong `LabT3-VPC`:
 
 > **Screenshot:** ![Danh sách Subnet Public và Private trong VPC](/images/1-Worklog/week-02/05-vpc-subnets-list.png)
 
-Thực hiện liên kết mạng con (Subnet Association): Gắn bảng định tuyến **`Public-RT`** (`rtb-0d32fcfc31405b51b`) vào `Public-Subnet` (`subnet-0d86b9a896d860d5b`), bảng này có tuyến đường trỏ thẳng tới Internet Gateway (`igw`).
+Thực hiện liên kết mạng con (Subnet Association): Gắn bảng định tuyến **`Public-RT`** (`rtb-0d32fcfc31405b51b`) vào `Public-Subnet` (`subnet-0d86b9a896d860d5b`), bảng này chứa tuyến đường trỏ trực tiếp tới Internet Gateway (`igw`).
 
 > **Screenshot:** ![Liên kết Subnet Association cho Public Route Table](/images/1-Worklog/week-02/06-public-subnet-association.png)
 
-Tạo **NAT Gateway** mang tên **`LabT3-NAT`** (`nat-160fbcccddaa27944`). NAT Gateway bắt buộc phải đặt trong `Public-Subnet` và được cấp phát một địa chỉ Elastic IP cố định (`18.209.181.106`) để làm đại diện khi giao tiếp với Internet. Trạng thái sau khi khởi tạo đạt **Available**.
+Tạo **NAT Gateway** mang tên **`LabT3-NAT`** (`nat-160fbcccddaa27944`). NAT Gateway bắt buộc phải đặt trong `Public-Subnet` và được cấp phát một địa chỉ Elastic IP cố định (`18.209.181.106`) để làm đại diện khi truyền thông với Internet. Trạng thái sau khi khởi tạo đạt **Available**.
 
 > **Screenshot:** ![NAT Gateway ở trạng thái Available với Elastic IP](/images/1-Worklog/week-02/07-nat-gateway-available.png)
 
-Cấu hình bảng định tuyến `Private-RT`: Thêm tuyến đường (Route) với đích đến `0.0.0.0/0` trỏ tới Target là NAT Gateway `nat-160fbcccddaa27944`. Cấu hình này giúp các EC2 bên trong Private Subnet có thể tải bản vá, cài đặt gói thư viện từ Internet ra ngoài mà chiều ngược lại từ Internet vẫn hoàn toàn bị chặn.
+Cấu hình bảng định tuyến `Private-RT`: Thêm tuyến đường (Route) với đích đến `0.0.0.0/0` trỏ tới Target là NAT Gateway `nat-160fbcccddaa27944`. Cấu hình này giúp các EC2 bên trong Private Subnet có thể kết nối ra ngoài Internet để tải bản vá, cài đặt thư viện một chiều an toàn mà không lộ diện IP với Internet.
 
 ```bash
-# Minh họa kiểm tra kết nối từ Private EC2 sau khi cấu hình NAT Gateway
+# Kiểm tra kết nối Internet một chiều từ Private EC2 thông qua NAT Gateway
 curl -I https://aws.amazon.com
 # HTTP/2 200
 # content-type: text/html; charset=utf-8
@@ -91,9 +90,9 @@ curl -I https://aws.amazon.com
 
 ---
 
-#### Bài tập 3: Amazon Route 53 — Quản lý DNS & Định tuyến tên miền
+#### Bài tập 3: Amazon Route 53 — Quản lý DNS, Hosted Zone & A Record
 
-Triển khai máy chủ web kiểm thử **`LabT4-Test`** (`i-0a86d42df283fe32e`) với địa chỉ Public IPv4: `98.86.220.109`.
+Khởi chạy máy chủ web kiểm thử **`LabT4-Test`** (`i-0a86d42df283fe32e`) với địa chỉ Public IPv4: `98.86.220.109`.
 
 > **Screenshot:** ![EC2 Web Server dùng làm đích cho Route 53](/images/1-Worklog/week-02/09-ec2-route53-instance.png)
 
@@ -116,13 +115,13 @@ Kiểm chứng phân giải tên miền: Mở Command Prompt trên máy local, t
 nslookup www.labt4-thuchanh.com ns-388.awsdns-48.com
 ```
 
-Kết quả trả về địa chỉ IP chính xác: `98.86.220.109`, xác minh cấu hình Route 53 đã hoạt động hoàn hảo.
+Kết quả trả về chính xác địa chỉ IP máy chủ: `98.86.220.109`, xác minh cấu hình Route 53 đã hoạt động chuẩn xác.
 
 > **Screenshot:** ![Kết quả nslookup xác minh phân giải DNS thành công](/images/1-Worklog/week-02/12-nslookup-dns-verification.png)
 
 ---
 
-#### Bài tập 4: Amazon CloudFront — Mạng phân phối nội dung (CDN)
+#### Bài tập 4: CloudFront — Khởi tạo CDN & Cấu hình Origin S3 Tăng tốc tải trang
 
 Tạo **Amazon CloudFront Distribution** mang tên **`Labt5`** (Distribution ID: `E3G4O9N747F2M4`). CloudFront tự động cấp phát domain name CDN: `d2vfkjpwxqkl8v.cloudfront.net` với trạng thái **Enabled**.
 
@@ -142,7 +141,7 @@ Truy cập website tĩnh thông qua đường dẫn CDN toàn cầu `https://d2v
 
 ---
 
-#### Bài tập 5: Lambda@Edge — Xử lý Edge Computing & HTTP Security Headers
+#### Bài tập 5: Lambda@Edge — Can thiệp Request/Response tại các Edge Locations
 
 Khởi tạo Lambda Function mang tên **`Edge-Security-Header`** với runtime `Node.js 24.x`, kiến trúc `x86_64` tại Region `us-east-1` (Vùng bắt buộc đối với dịch vụ Lambda@Edge).
 
@@ -156,7 +155,7 @@ Soạn thảo và gắn Policy Statement trên IAM Policy Editor, đảm bảo q
 
 > **Screenshot:** ![Thiết lập IAM Policy Statement Editor](/images/1-Worklog/week-02/19-lambda-policy-statement.png)
 
-Triển khai mã nguồn Node.js chèn các Security Headers và tạo CloudFront Trigger:
+Triển khai mã nguồn Node.js can thiệp vào HTTP headers và tạo CloudFront Trigger:
 - **Distribution:** `E3G4O9N747F2M4` (CloudFront)
 - **CloudFront event:** `Viewer response`
 - Xác nhận triển khai hàm sang phiên bản mới (Deploy to Lambda@Edge).
@@ -166,7 +165,7 @@ export const handler = async (event) => {
     const response = event.Records[0].cf.response;
     const headers = response.headers;
 
-    // Chèn HTTP Security Headers
+    // Can thiệp và tiêm các HTTP Security Headers vào response
     headers['strict-transport-security'] = [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubdomains; preload' }];
     headers['x-content-type-options'] = [{ key: 'X-Content-Type-Options', value: 'nosniff' }];
     headers['x-frame-options'] = [{ key: 'X-Frame-Options', value: 'DENY' }];
@@ -179,13 +178,13 @@ export const handler = async (event) => {
 
 > **Screenshot:** ![Cấu hình CloudFront Trigger Viewer Response](/images/1-Worklog/week-02/20-lambda-edge-trigger.png)
 
-Mở DevTools (F12) trên trình duyệt, kiểm tra tab Network khi gửi request tới `https://d2vfkjpwxqkl8v.cloudfront.net/index.html`. Trong phần Response Headers, các header bảo mật do Lambda@Edge tiêm vào hiển thị đầy đủ: `X-Fpt-Sec-Lab: Hoan-thanh-Lab-T6` và `X-Frame-Options: DENY`.
+Mở DevTools (F12) trên trình duyệt, kiểm tra tab Network khi gửi request tới `https://d2vfkjpwxqkl8v.cloudfront.net/index.html`. Trong phần Response Headers, các header bảo mật do Lambda@Edge can thiệp và chèn vào hiển thị rõ ràng: `X-Fpt-Sec-Lab: Hoan-thanh-Lab-T6` và `X-Frame-Options: DENY`.
 
 > **Screenshot:** ![Xác minh Response Headers bảo mật được tiêm thành công](/images/1-Worklog/week-02/21-lambda-edge-headers-verified.png)
 
 ---
 
-#### Bài tập 6: Lab Tổng hợp — Phân tầng Security Groups & Kiểm thử kết nối liên Subnet
+#### Bài tập 6: Lab Tổng hợp 2 — Dựng kiến trúc Web Server (Public) & Giao tiếp an toàn (Private)
 
 Thiết lập Security Group cho Web Server công khai mang tên **`Web-SG`** trong VPC `Mylabt7`. Cấu hình Inbound Rules mở các cổng cần thiết cho client bên ngoài:
 - **HTTP (TCP 80)**: Source `0.0.0.0/0`
@@ -194,16 +193,16 @@ Thiết lập Security Group cho Web Server công khai mang tên **`Web-SG`** tr
 
 > **Screenshot:** ![Tạo Security Group Web-SG cho Public Web Server](/images/1-Worklog/week-02/22-security-group-web-sg.png)
 
-Thiết lập Security Group cho máy chủ nội bộ **`Private-SG`** (`sg-00f606d0da92bd89c`). Để bảo mật tuyệt đối, Inbound Rules chỉ cho phép:
+Thiết lập Security Group cho máy chủ nội bộ **`Private-SG`** (`sg-00f606d0da92bd89c`). Để bảo mật tối đa, Inbound Rules chỉ cho phép giao tiếp nội bộ:
 - **All ICMP - IPv4**: Cho phép ping kiểm tra trạng thái mạng nội bộ.
-- **SSH (TCP 22)**: Cho phép kết nối quản trị từ máy chủ Web (Bastion Host) trong Public Subnet.
+- **SSH (TCP 22)**: Cho phép kết nối quản trị an toàn từ Web Server (Bastion Host) trong Public Subnet.
 
 > **Screenshot:** ![Cấu hình Inbound Rules cho Private-SG](/images/1-Worklog/week-02/24-private-security-group-rules.png)
 
-Kiểm thử kết nối liên Subnet (Inter-subnet Connectivity): Kết nối vào máy chủ **`LabT7-Web-Server`** (`10.0.1.123`) thông qua EC2 Instance Connect, sau đó thực hiện lệnh `ping` tới địa chỉ IP máy chủ nội bộ `10.0.2.214`. Các gói tin phản hồi ổn định với độ trễ cực thấp (~0.3ms), chứng minh hệ thống định tuyến nội bộ của VPC hoạt động thông suốt và các Security Group được cấu hình chính xác.
+Kiểm thử kết nối liên Subnet: Kết nối vào máy chủ **`LabT7-Web-Server`** (`10.0.1.123`) thông qua EC2 Instance Connect, sau đó thực hiện lệnh `ping` tới địa chỉ IP máy chủ nội bộ `10.0.2.214`. Các gói tin phản hồi liên tục với độ trễ cực thấp (~0.3ms), chứng minh kiến trúc mạng phân tầng giao tiếp an toàn, bảo vệ vững chắc tài nguyên Private Subnet.
 
 ```bash
-# Ping từ Web Server (Public) sang Private Instance
+# Ping từ Web Server (Public Subnet) sang Private Instance
 ping 10.0.2.214
 # PING 10.0.2.214 (10.0.2.214) 56(84) bytes of data.
 # 64 bytes from 10.0.2.214: icmp_seq=1 ttl=127 time=1.31 ms

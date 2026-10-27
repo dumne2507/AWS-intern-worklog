@@ -1,7 +1,7 @@
 baseURL = "https://dumne2507.github.io/AWS-intern-worklog/"
 relativeURLs = true
 canonifyURLs = true
-defaultContentLanguage = "vi"
+defaultContentLanguage = "en"
 
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"

@@ -8,60 +8,78 @@ pre: " <b> 1.4. </b> "
 
 ## Week 4 Objectives: IAM & Authorization
 
-- **IAM Identity Center:** Configure AWS Single Sign-On (SSO) to centralize login management across all AWS accounts in the Organization.
-- **IAM Policies Advanced:** Write custom JSON policies and apply Condition keys to restrict access by IP address and time of day.
-- **Permission Boundaries:** Set up permission boundaries to cap maximum effective permissions for IAM users and roles.
-- **IAM Roles for EC2:** Grant IAM Role to EC2 instances so servers automatically access S3/DynamoDB without storing long-term credentials.
-- **AWS Secrets Manager:** Securely store and auto-rotate database passwords, eliminating hardcoded secrets.
-- **Comprehensive Lab 4:** Deploy an EC2 architecture with zero hardcoded credentials, calling the API to dynamically retrieve the DB password from Secrets Manager.
+- **IAM Identity Center:** Configure AWS Single Sign-On (SSO) to centralize workforce login management across AWS Organization accounts, enabling Multi-Factor Authentication (MFA).
+- **IAM Policies Advanced:** Author custom JSON policies applying Condition keys (`aws:SourceIp`) to restrict S3 bucket access to specific IP ranges.
+- **Permission Boundaries:** Establish maximum permission boundaries for IAM Users and Roles, preventing privilege escalation.
+- **IAM Roles for EC2:** Attach an IAM Role directly to an EC2 instance to grant programmatic access to S3 and DynamoDB without long-term access keys.
+- **AWS KMS & Data Encryption:** Provision a Customer Managed Key (KMS Key) and apply encryption at rest to EBS Volumes and Amazon S3 Buckets.
+- **Comprehensive Lab 4:** Architect and deploy an EC2 instance holding zero hardcoded credentials, authenticating via IAM Role to retrieve runtime secrets from AWS Secrets Manager.
 
 ### Tasks Planned for This Week
 
 | Day | Topic | Task | Start Date | End Date | Reference |
 | :---: | :--- | :--- | :---: | :---: | :--- |
-| **Mon** | **IAM Identity Center** | Configure AWS SSO for centralized login management | 05/10/2026 | 05/10/2026 | [IAM Identity Center](https://docs.aws.amazon.com/singlesignon/) |
-| **Tue** | **IAM Policies Advanced** | Write custom JSON policies, use Condition keys to restrict access by IP/time | 06/10/2026 | 06/10/2026 | [IAM Policy Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) |
-| **Wed** | **Permission Boundaries** | Set up permission boundaries to control maximum permissions for users/roles | 07/10/2026 | 07/10/2026 | [Permissions Boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) |
-| **Thu** | **IAM Roles for EC2** | Grant Role to EC2 to auto-access S3/DynamoDB without storing credentials | 08/10/2026 | 08/10/2026 | [IAM Roles for EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html) |
-| **Fri** | **AWS Secrets Manager** | Securely store and rotate database passwords | 09/10/2026 | 09/10/2026 | [Secrets Manager](https://docs.aws.amazon.com/secretsmanager/) |
-| **Sat** | **Comprehensive Lab 4** | Deploy EC2 with no hardcoded credentials, retrieve DB password from Secrets Manager | 10/10/2026 | 10/10/2026 | [AWS Security Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html) |
+| **Mon** | **IAM Identity Center** | Configure AWS SSO, set up the Access Portal, and register virtual MFA devices | 05/10/2026 | 05/10/2026 | [IAM Identity Center](https://docs.aws.amazon.com/singlesignon/) |
+| **Tue** | **IAM Policies Advanced** | Author custom JSON policy with `aws:SourceIp` condition key to restrict S3 bucket access | 06/10/2026 | 06/10/2026 | [IAM Policy Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) |
+| **Wed** | **Permission Boundaries** | Set up permission boundaries to enforce maximum privilege limits across AWS services | 07/10/2026 | 07/10/2026 | [Permissions Boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) |
+| **Thu** | **IAM Roles for EC2** | Attach IAM Role to EC2 and verify credential-free S3/DynamoDB access via IMDS | 08/10/2026 | 08/10/2026 | [IAM Roles for EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html) |
+| **Fri** | **AWS KMS & Encryption** | Provision KMS Key (`Key-KMS-LabT6`) and configure at-rest encryption for EBS & S3 | 09/10/2026 | 09/10/2026 | [AWS KMS](https://docs.aws.amazon.com/kms/) |
+| **Sat** | **Comprehensive Lab 4** | Deploy EC2 with zero hardcoded credentials, retrieving secrets from Secrets Manager | 10/10/2026 | 10/10/2026 | [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/) |
 
 ### Week 4 Results
 
-- Successfully enabled AWS IAM Identity Center in `us-east-1`, created `DevReadOnly` Permission Set, and verified SSO login flow via the AWS access portal URL.
-- Authored custom IAM policies with `aws:SourceIp`, `aws:RequestedRegion`, and `aws:CurrentTime` Condition keys; validated all scenarios in IAM Policy Simulator.
-- Configured `DeveloperBoundary` Permission Boundary, confirmed effective permissions are only the intersection of identity policy and boundary — even `AdministratorAccess` was capped.
-- Created `EC2-S3-DynamoDB-Role` IAM Role attached to EC2; verified credential-free access to S3 and DynamoDB via IMDS temporary credentials using `aws sts get-caller-identity`.
-- Stored `prod/myapp/db-password` RDS credentials in Secrets Manager with KMS encryption and enabled 30-day automatic rotation via Lambda.
-- Completed Comprehensive Lab 4: end-to-end zero-credential EC2 architecture — IMDS → IAM Role → Secrets Manager → KMS decrypt → in-memory password — no credentials ever written to disk.
+- Successfully configured AWS IAM Identity Center with access portal URL `ssoins-72232edfad9c07c3.portal.us-east-1.app.aws`, registering virtual MFA device `Admin-Users's MFA 1` for administrator user `Dũng Nguyễn Mạnh`.
+- Implemented advanced IAM Policy with `aws:SourceIp` condition key for user `LabT3-Test`, verifying that unauthorized requests were rejected (`Insufficient permissions`) while authorized requests accessed `LabT3.html` seamlessly.
+- Successfully enforced Permission Boundaries on user `LabT3-Test`: despite broad IAM permissions, actions outside the boundary (EC2 and VPC operations) returned `Access denied` and `DescribeAccountAttributes / DescribeVpcs` authorization errors.
+- Deployed EC2 instance `Lab-T5` (`i-04c89eaec696a2cef`) with an attached IAM Role, successfully querying S3 bucket `labt3-test-ip-public` and DynamoDB `list-tables` without configuring static `~/.aws/credentials`.
+- Provisioned Customer Managed Key `Key-KMS-LabT6` (`1c0663df-33b2-437c-a98f-cc38935054f8`), encrypting an EBS Volume and enforcing SSE-KMS default encryption with S3 Bucket Key on `labt6-s3-kms`.
+- Completed Comprehensive Lab 4: launched EC2 instance `EC2-Secret-Role-T7` (`i-032c941e009326a97`), calling `aws secretsmanager get-secret-value` to securely retrieve secret `secret-labt7` entirely in memory without writing credentials to disk.
 
 ---
 
-#### Exercise 1: IAM Identity Center — Centralized SSO Login
+#### Exercise 1: IAM Identity Center — AWS SSO Configuration & Centralized MFA
 
-AWS IAM Identity Center (formerly AWS SSO) provides a single sign-on entry point for all AWS accounts and cloud applications within an AWS Organization. I began by enabling IAM Identity Center in the **us-east-1** region and linking it to the AWS Organization root account. The service creates a dedicated identity store that acts as the authoritative source for user identities.
+Provisioned and configured **AWS IAM Identity Center** (formerly AWS Single Sign-On) in Region `us-east-1` for centralized workforce identity and multi-account access governance:
+- **Access Portal URL:** `https://ssoins-72232edfad9c07c3.portal.us-east-1.app.aws/#/security`
+- **User Account:** `Dũng Nguyễn Mạnh` (Display Name: `Dũng`)
+- **Registered MFA Device:** `Admin-Users's MFA 1`
+- **Device Type:** `Authenticator app` (Two-factor authentication via mobile app)
+- **MFA Registration Date:** `Fri Oct 23 2026 11:03:00 GMT+0700 (Indochina Time)`
+- **Active Session:** `Desktop - Edge 155.0, Windows 10`
+- **Client IP Address:** `115.78.22...` | **Remaining Session Time:** `7 hours 59 minutes`
 
-After enabling the service, I created a Permission Set named `DevReadOnly` that includes `ReadOnlyAccess` as a managed policy. A Permission Set defines what an IAM Identity Center user can do once they log in to a specific account. I then created a user, assigned the Permission Set to that user for the development account, and tested the login flow via the generated AWS access portal URL.
+The AWS Access Portal enables switching across multiple AWS accounts within the Organization with a single authentication step, dynamically vending short-lived STS credentials without storing persistent access keys locally.
 
-> **Screenshot:** ![IAM Identity Center SSO Dashboard](/images/1-Worklog/week-04/01-iam-identity-center-sso.png)
+> **Screenshot:** ![AWS Access Portal Dashboard and MFA Configuration](/images/1-Worklog/week-04/01-iam-identity-center-sso.png)
 
 ---
 
-#### Exercise 2: IAM Policies Advanced — Condition Keys
+#### Exercise 2: IAM Policies Advanced — Custom Policy & IP Restriction with Condition Keys
 
-Standard IAM policies grant or deny actions on resources, but **Condition keys** make policies dynamic. I created a custom policy that allows S3 `GetObject` only when the requester's IP falls within the corporate CIDR block `203.0.113.0/24` using the condition key `aws:SourceIp`.
+Created a dedicated IAM test user named **`LabT3-Test`** within AWS Account `468502414950` (`Manhdung2507`) to evaluate **Condition Keys**.
+
+> **Screenshot:** ![IAM Users List in Management Console](/images/1-Worklog/week-04/02-iam-policy-json-editor.png)
+
+Authored a custom IAM JSON policy attached to user `LabT3-Test`, utilizing the `aws:SourceIp` condition key to strictly restrict `s3:ListBucket` and `s3:GetObject` permissions against bucket **`labt3-test-ip-public`** to authorized corporate IP CIDRs:
 
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Sid": "AllowS3AccessFromCorporateIPOnly",
       "Effect": "Allow",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::my-intern-bucket/*",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::labt3-test-ip-public",
+        "arn:aws:s3:::labt3-test-ip-public/*"
+      ],
       "Condition": {
         "IpAddress": {
-          "aws:SourceIp": "203.0.113.0/24"
+          "aws:SourceIp": "115.78.22.0/24"
         }
       }
     }
@@ -69,115 +87,143 @@ Standard IAM policies grant or deny actions on resources, but **Condition keys**
 }
 ```
 
-I also experimented with `aws:RequestedRegion` to restrict all API calls to `ap-southeast-1` only, and `aws:CurrentTime` to allow console access only during office hours (08:00–18:00 UTC+7). These Condition keys are evaluated in real time by the IAM policy engine before any action is permitted.
+Executed verification testing across two distinct scenarios:
+- **Scenario 1 (Unauthorized IP):** Accessing bucket `labt3-test-ip-public` with `LabT3-Test` from outside the whitelisted CIDR range prompted an immediate red error banner: *"Insufficient permissions to list objects. After you or your AWS administrator has updated your permissions to allow the s3:ListBucket action, refresh the page."*
 
-> **Screenshot:** ![IAM Policy JSON Editor with Condition Keys](/images/1-Worklog/week-04/02-iam-policy-json-editor.png)
+> **Screenshot:** ![S3 Access Denied Due to IP Mismatch in Condition Key](/images/1-Worklog/week-04/03-iam-condition-keys.png)
 
-To verify the policies, I used the **IAM Policy Simulator** tool. The simulator lets you select a user or role, pick an action and resource, and see exactly which policy statement matches — whether Allow or Deny — without making a real API call.
+- **Scenario 2 (Authorized IP):** Accessing from the approved IP address listed in the Condition block, user `LabT3-Test` successfully listed bucket objects and retrieved file **`LabT3.html`** (Type: `html`, Size: `0 B`, Storage class: `Standard`).
 
-> **Screenshot:** ![Condition Key Configuration Detail](/images/1-Worklog/week-04/03-iam-condition-keys.png)
-
-After simulating several scenarios (correct IP, wrong IP, inside office hours, outside office hours), all results matched expectations: requests from outside the allowed CIDR or outside the allowed time window returned `ImplicitDeny`.
-
-> **Screenshot:** ![Policy Simulator Test Result](/images/1-Worklog/week-04/04-iam-policy-test-result.png)
+> **Screenshot:** ![S3 Object List Accessible from Allowed IP](/images/1-Worklog/week-04/04-iam-policy-test-result.png)
 
 ---
 
-#### Exercise 3: Permission Boundaries — Capping Maximum Permissions
+#### Exercise 3: Permission Boundaries — Enforcing Maximum Effective Permissions
 
-A **Permission Boundary** is an advanced IAM feature that sets the maximum permissions an identity-based policy can grant to an IAM entity. Even if the entity's policy allows an action, if the permission boundary does not allow it, the action is denied. This is especially useful for delegated administration — allowing junior admins to create IAM roles but preventing privilege escalation.
+Configured **Permission Boundaries** on user **`LabT3-Test`** (`arn:aws:iam::468502414950:user/LabT3-Test`). The boundary policy restricted permissible actions solely to Amazon S3, targeting bucket **`labt3-test-ip-public`** in region `us-east-1`.
 
-I created a boundary policy named `DeveloperBoundary` that permits only `s3:*`, `dynamodb:*`, and `cloudwatch:GetMetric*`. I then created a new IAM role `AppRole-Dev` and attached this boundary via the AWS CLI:
+> **Screenshot:** ![S3 Bucket labt3-test-ip-public Within Permission Boundary](/images/1-Worklog/week-04/05-permission-boundary-setup.png)
+
+Conducted strict verification of boundary enforcement against non-whitelisted AWS services:
+- **Verification on EC2 Dashboard:** When user `LabT3-Test` navigated to the EC2 console, all operational widgets returned **`Access denied`**:
+  - `Dedicated Hosts:` ❌ Access denied
+  - `Key pairs:` ❌ Access denied
+  - `Security groups:` ❌ Access denied
+  - `Auto Scaling Groups:` ❌ Access denied
+  - `Elastic IPs:` ❌ Access denied
+  - `Load balancers:` ❌ Access denied
+  - `Instances (running):` ❌ Access denied
+  - `Volumes:` ❌ Access denied
+  - `Service health:` ❌ *You don't have permission to health:DescribeEvents.*
+
+> **Screenshot:** ![EC2 Management Console Blocked by Permission Boundary](/images/1-Worklog/week-04/06-permission-boundary-policy.png)
+
+- **Verification on VPC Dashboard:** Navigating to the VPC console produced an error notification:
+  - Error: *"User: arn:aws:iam::468502414950:user/LabT3-Test is not authorized to perform: ec2:DescribeAccountAttributes because no permissions boundary allows the ec2:DescribeAccountAttributes action"*
+
+> **Screenshot:** ![DescribeAccountAttributes Action Denied by Permission Boundary](/images/1-Worklog/week-04/07-permission-boundary-deny-test.png)
+
+- **Verification on Your VPCs List:** Querying the VPC inventory was likewise intercepted:
+  - Error: *"User: arn:aws:iam::468502414950:user/LabT3-Test is not authorized to perform: ec2:DescribeVpcs because no permissions boundary allows the ec2:DescribeVpcs action"*
+
+> **Screenshot:** ![DescribeVpcs Intercepted and Denied by Boundary](/images/1-Worklog/week-04/08-permission-boundary-result.png)
+
+The experiment confirmed: regardless of how permissive an identity policy might be, any action excluded from the **Permission Boundary** results in an implicit deny, effectively capping delegation privilege limits.
+
+---
+
+#### Exercise 4: IAM Roles for EC2 — Credential-Free Service Access
+
+Launched an EC2 instance dedicated to role-based credential verification:
+- **Instance Name:** **`Lab-T5`**
+- **Instance ID:** `i-04c89eaec696a2cef`
+- **Operating System:** Amazon Linux 2023
+- **Public IPv4:** `54.87.203.146`
+- **Private IPv4:** `172.31.34.206`
+- **Availability Zone:** `us-east-1`
+- **Attached IAM Role:** Grants read permissions for Amazon S3 (`s3:ListAllMyBuckets`, `s3:Get*`) and Amazon DynamoDB (`dynamodb:ListTables`).
+
+Connected to the instance via SSH / EC2 Instance Connect and verified service access directly from the AWS CLI:
 
 ```bash
-aws iam create-role \
-  --role-name AppRole-Dev \
-  --assume-role-policy-document file://trust-policy.json \
-  --permissions-boundary arn:aws:iam::123456789012:policy/DeveloperBoundary
+# List S3 Buckets using IAM Role credentials
+[ec2-user@ip-172-31-34-206 ~]$ aws s3 ls
+2026-10-23 06:13:30 labt3-test-ip-public
+
+# List DynamoDB tables in region us-east-1
+[ec2-user@ip-172-31-34-206 ~]$ aws dynamodb list-tables --region us-east-1
+{
+    "TableNames": []
+}
 ```
 
-> **Screenshot:** ![Permission Boundary Setup in Console](/images/1-Worklog/week-04/05-permission-boundary-setup.png)
+Both commands executed successfully without running `aws configure` or maintaining local credentials files (`~/.aws/credentials`). The Instance Metadata Service (IMDSv2) delivers auto-refreshing session credentials, eliminating risk of hardcoded key exposure.
 
-After attaching the boundary, I also attached `AdministratorAccess` as the identity-based policy to the same role (intentionally over-permissive). Testing an `ec2:DescribeInstances` call via this role returned `AccessDenied` because EC2 is not in the boundary — demonstrating that the boundary caps permissions regardless of the identity policy.
-
-> **Screenshot:** ![Permission Boundary Policy Details](/images/1-Worklog/week-04/06-permission-boundary-policy.png)
-
-I then modified the boundary to include `ec2:DescribeInstances` and tested again — the call succeeded, confirming the boundary is the gating factor.
-
-> **Screenshot:** ![Deny Test Result with Boundary](/images/1-Worklog/week-04/07-permission-boundary-deny-test.png)
-
-Finally, I ran the IAM Policy Simulator with the boundary in scope and confirmed the effective permissions matched only the intersection of the identity policy and the boundary policy.
-
-> **Screenshot:** ![Permission Boundary Final Result](/images/1-Worklog/week-04/08-permission-boundary-result.png)
+> **Screenshot:** ![EC2 Instance Executing S3 and DynamoDB CLI Commands via IAM Role](/images/1-Worklog/week-04/09-iam-role-ec2-attach.png)
 
 ---
 
-#### Exercise 4: IAM Roles for EC2 — Credential-Free Architecture
+#### Exercise 5: AWS KMS & Storage Encryption — Protecting EBS Volumes & S3 Buckets
 
-Hardcoding AWS credentials into EC2 application code or environment variables is a critical security anti-pattern. The correct approach is to attach an **IAM Role** to the EC2 instance. The EC2 Instance Metadata Service (IMDS) then vends temporary, auto-rotating credentials to any process on the instance — no long-term keys needed.
+Created a Customer Managed Key (**KMS Key**) with alias **`Key-KMS-LabT6`**:
+- **KMS Key ID:** `1c0663df-33b2-437c-a98f-cc38935054f8`
+- **KMS Key ARN:** `arn:aws:kms:us-east-1:468502414950:key/1c0663df-33b2-437c-a98f-cc38935054f8`
+- **Region:** `us-east-1` (N. Virginia)
 
-I created an IAM role named `EC2-S3-DynamoDB-Role` with an EC2 trust policy and attached two managed policies: `AmazonS3ReadOnlyAccess` and `AmazonDynamoDBReadOnlyAccess`. I then attached this role to a running EC2 instance via the AWS CLI:
+Applied this KMS Key across primary storage tiers:
+- **EBS Volume Encryption:** Created a block storage volume with encryption enabled. The EC2 Volumes dashboard confirmed:
+  - **Status check:** `Okay`
+  - **Encryption:** `Encrypted`
+  - **KMS key ID:** `1c0663df-33b...` (Mapped to alias `Key-KMS-LabT6`)
+
+> **Screenshot:** ![EBS Volume Encrypted with Customer Managed Key](/images/1-Worklog/week-04/10-secrets-manager-create.png)
+
+- **S3 Bucket Encryption:** Created S3 Bucket named **`labt6-s3-kms`** configured with **Default encryption**:
+  - **Encryption type:** `Server-side encryption with AWS Key Management Service keys (SSE-KMS)`
+  - **Encryption key ARN:** `arn:aws:kms:us-east-1:468502414950:key/1c0663df-33b2-437c-a98f-cc38935054f8`
+  - **Bucket Key:** `Enabled` (Drastically cuts KMS request rates, lowering KMS API costs by up to 99%)
+  - **Blocked encryption types:** `Server-Side Encryption with Customer-Provided Keys (SSE-C)`
+
+> **Screenshot:** ![S3 Bucket labt6-s3-kms Configured with Default SSE-KMS Encryption](/images/1-Worklog/week-04/11-secrets-manager-rotate.png)
+
+---
+
+#### Exercise 6: Comprehensive Lab 4 — Zero-Credential EC2 Architecture with AWS Secrets Manager
+
+Engineered a production-ready security architecture: Deployed an EC2 application server that contains zero hardcoded database passwords or connection strings. The instance assumes an IAM Role authorized to call **AWS Secrets Manager**:
+- **EC2 Instance Name:** **`EC2-Secret-Role-T7`**
+- **Instance ID:** `i-032c941e009326a97`
+- **Operating System:** Amazon Linux 2023
+- **Public IPv4:** `100.54.219.219`
+- **Private IPv4:** `172.31.7.232`
+- **Secret Name:** `secret-labt7`
+- **Secret ARN:** `arn:aws:secretsmanager:us-east-1:468502414950:secret:secret-labt7-JCzzxK`
+- **Version ID:** `dfba26c0-ef0f-4379-8c7a-bd024eca8ef3`
+- **Version Stages:** `["AWSCURRENT"]`
+
+From the terminal of `EC2-Secret-Role-T7`, fetched the secret securely at runtime:
 
 ```bash
-aws ec2 associate-iam-instance-profile \
-  --instance-id i-0abcdef1234567890 \
-  --iam-instance-profile Name=EC2-S3-DynamoDB-Role
+# Connect to EC2-Secret-Role-T7 instance (IP: 172.31.7.232)
+Last login: Sat Oct 31 15:19:14 2026 from 18.206.107.29
+
+# Call AWS Secrets Manager API to fetch secret at runtime
+[ec2-user@ip-172-31-7-232 ~]$ aws secretsmanager get-secret-value --secret-id secret-labt7 --region us-east-1
+{
+    "ARN": "arn:aws:secretsmanager:us-east-1:468502414950:secret:secret-labt7-JCzzxK",
+    "Name": "secret-labt7",
+    "VersionId": "dfba26c0-ef0f-4379-8c7a-bd024eca8ef3",
+    "SecretString": "{\"secretkey123\":\"Secretkey123\"}",
+    "VersionStages": [
+        "AWSCURRENT"
+    ],
+    "CreatedDate": "2026-10-31T15:09:04.069000+00:00"
+}
 ```
 
-> **Screenshot:** ![IAM Role Attached to EC2 Instance](/images/1-Worklog/week-04/09-iam-role-ec2-attach.png)
+The system returned the decrypted JSON payload `{"secretkey123":"Secretkey123"}` directly into application memory. This zero-credential model prevents secret compromise from codebase leaks or server compromise.
 
-From inside the EC2 instance, the AWS CLI automatically uses the role credentials without any `aws configure` needed:
-
-```bash
-# Inside EC2 — no aws configure needed
-aws s3 ls s3://my-intern-bucket
-aws dynamodb list-tables --region ap-southeast-1
-
-# Verify identity
-aws sts get-caller-identity
-```
-
-Both commands succeeded and `aws sts get-caller-identity` confirmed the caller identity was the IAM Role, not any IAM user. Temporary credentials are automatically refreshed by the metadata service before expiry.
-
----
-
-#### Exercise 5: AWS Secrets Manager — Secure Credential Storage & Rotation
-
-Storing database passwords in plaintext (environment variables, config files, source code) is a major security risk. **AWS Secrets Manager** solves this by storing secrets in encrypted form (using AWS KMS) and providing a programmatic API to retrieve them at runtime.
-
-I created a new secret of type **RDS credentials** containing the username and password for a MySQL RDS instance. Secrets Manager encrypted the value and stored it under the name `prod/myapp/db-password`. From an EC2 instance with the appropriate role, the application retrieves it at startup:
-
-```python
-import boto3, json
-
-client = boto3.client('secretsmanager', region_name='ap-southeast-1')
-response = client.get_secret_value(SecretId='prod/myapp/db-password')
-secret = json.loads(response['SecretString'])
-DB_PASSWORD = secret['password']
-```
-
-> **Screenshot:** ![Secrets Manager Secret Creation](/images/1-Worklog/week-04/10-secrets-manager-create.png)
-
-I then enabled **automatic rotation** with a 30-day schedule. Secrets Manager uses a Lambda function (auto-created for RDS types) to generate a new password, update it in the RDS instance, and store the new value — all without downtime. The application only calls `get_secret_value` at runtime and never stores the password anywhere.
-
-> **Screenshot:** ![Secrets Manager Rotation Configuration](/images/1-Worklog/week-04/11-secrets-manager-rotate.png)
-
----
-
-#### Exercise 6: Comprehensive Lab 4 — Zero-Credential EC2 Architecture
-
-The final lab integrated all week's concepts into a production-grade security architecture: an EC2 instance that holds no hardcoded credentials, authenticates via IAM Role, and retrieves its database password dynamically from Secrets Manager at runtime.
-
-The architecture flow is:
-1. EC2 starts → IMDS provides temporary credentials for `EC2-AppRole`
-2. Application calls `secretsmanager:GetSecretValue` for `prod/myapp/db-password`
-3. Secrets Manager validates the role's IAM policy → returns encrypted secret
-4. KMS decrypts the value → application receives plaintext password in memory only
-5. Application connects to RDS with the retrieved password — never written to disk
-
-All components were deployed via the AWS CLI and verified end-to-end. The `aws sts get-caller-identity` output confirmed no IAM user credentials were present on the instance at any point.
-
-> **Screenshot:** ![Lab 4 Final Architecture Diagram](/images/1-Worklog/week-04/12-lab4-final-architecture.png)
+> **Screenshot:** ![EC2 Successfully Retrieving Runtime Secret from AWS Secrets Manager](/images/1-Worklog/week-04/12-lab4-final-architecture.png)
 
 ---
 
@@ -185,10 +231,11 @@ All components were deployed via the AWS CLI and verified end-to-end. The `aws s
 
 | Issue | Root Cause | Resolution |
 | :--- | :--- | :--- |
-| SSO login loop after enabling Identity Center | DNS propagation delay for the SSO subdomain | Waited 5 minutes and cleared browser cache before retrying |
-| `AccessDenied` when testing Permission Boundary | `ec2:DescribeInstances` not included in boundary policy | Added the specific EC2 action to `DeveloperBoundary` policy |
-| EC2 `aws configure` credentials overriding instance role | Local `~/.aws/credentials` file contained static access keys | Deleted `~/.aws/credentials` file; credentials now sourced exclusively via IMDS |
-| `ResourceNotFoundException` in Secrets Manager | Secret name is case-sensitive; typo in application code | Corrected name from `prod/myapp/DB-password` to `prod/myapp/db-password` |
+| S3 Bucket inaccessible despite user policy attached | Condition key `aws:SourceIp` blocked requests from non-whitelisted IP addresses | Checked current external IPv4 address and updated CIDR block in the Condition statement |
+| `AccessDenied` errors across EC2 and VPC consoles | User restricted by Permission Boundary policy scoped only to S3 | Intended boundary behavior; update boundary policy if EC2/VPC delegation is needed |
+| `ec2:DescribeAccountAttributes` error on VPC dashboard | Boundary omitted EC2 account description permissions | Added `ec2:DescribeAccountAttributes` to boundary policy to allow VPC console rendering |
+| Unauthorized error calling Secrets Manager from EC2 | Instance Profile role lacked `secretsmanager:GetSecretValue` permission | Added IAM policy granting `secretsmanager:GetSecretValue` on secret ARN `secret-labt7` |
+| Increased KMS costs under high S3 request volumes | Each SSE-KMS read operation triggers an independent KMS Decrypt API call | Enabled **Bucket Key** on the S3 bucket to cache data keys and cut KMS API call volume by up to 99% |
 
 ### Plan for Week 5: Monitoring & Security
 

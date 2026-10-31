@@ -8,62 +8,78 @@ pre: " <b> 1.4. </b> "
 
 ## Mục tiêu tuần 4: Phân quyền & IAM
 
-- **IAM Identity Center:** Cấu hình AWS Single Sign-On (SSO) để quản lý đăng nhập tập trung cho toàn bộ tài khoản AWS trong Organization.
-- **IAM Policies nâng cao:** Viết custom JSON policies và áp dụng Condition keys để giới hạn truy cập theo địa chỉ IP và khung giờ cụ thể.
-- **Permission Boundaries:** Thiết lập ranh giới quyền hạn để kiểm soát tối đa quyền hiệu lực của IAM user và role.
-- **IAM Roles cho EC2:** Cấp IAM Role cho EC2 instance để máy chủ tự động truy cập S3/DynamoDB mà không cần lưu trữ thông tin xác thực dài hạn.
-- **AWS Secrets Manager:** Lưu trữ an toàn và xoay vòng tự động mật khẩu database, loại bỏ hoàn toàn thông tin xác thực cứng trong code.
-- **Lab Tổng hợp 4:** Triển khai kiến trúc EC2 không có thông tin xác thực cứng, gọi API lấy mật khẩu DB động từ Secrets Manager.
+- **IAM Identity Center:** Cấu hình AWS Single Sign-On (SSO) để quản lý đăng nhập tập trung cho toàn bộ tài khoản AWS trong Organization, kích hoạt xác thực đa yếu tố MFA.
+- **IAM Policies nâng cao:** Viết custom JSON policy và áp dụng Condition keys (`aws:SourceIp`) để giới hạn dải IP được phép truy cập tài nguyên S3.
+- **Permission Boundaries:** Thiết lập ranh giới quyền hạn tối đa cho IAM User/Role, kiểm soát chặt chẽ nhằm ngăn chặn hành vi leo thang đặc quyền.
+- **IAM Roles cho EC2:** Gắn IAM Role trực tiếp cho máy chủ EC2 để tự động truy cập dịch vụ AWS (S3, DynamoDB) mà không cần lưu trữ Access Key/Secret Key tĩnh.
+- **AWS KMS & Mã hóa lưu trữ:** Khởi tạo Customer Managed Key (KMS Key) và áp dụng mã hóa dữ liệu lưu trữ cho ổ đĩa EBS Volume và kho lưu trữ S3 Bucket.
+- **Lab Tổng hợp 4:** Triển khai kiến trúc máy chủ EC2 không lưu trữ thông tin xác thực, xác thực qua IAM Role và gọi API lấy mật khẩu an toàn từ AWS Secrets Manager.
 
 ### Các công việc cần triển khai trong tuần này
 
 | Thứ | Chủ đề | Công việc | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
 | :---: | :--- | :--- | :---: | :---: | :--- |
-| **2** | **IAM Identity Center** | Cấu hình AWS SSO để quản lý đăng nhập tập trung | 05/10/2026 | 05/10/2026 | [IAM Identity Center](https://docs.aws.amazon.com/singlesignon/) |
-| **3** | **IAM Policies nâng cao** | Viết custom JSON policies, dùng Condition keys giới hạn truy cập theo IP/thời gian | 06/10/2026 | 06/10/2026 | [IAM Policy Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) |
-| **4** | **Permission Boundaries** | Thiết lập ranh giới quyền hạn kiểm soát quyền tối đa của user/role | 07/10/2026 | 07/10/2026 | [Permissions Boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) |
-| **5** | **IAM Roles cho EC2** | Cấp Role cho EC2 tự động truy cập S3/DynamoDB không cần lưu khóa | 08/10/2026 | 08/10/2026 | [IAM Roles for EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html) |
-| **6** | **AWS Secrets Manager** | Lưu trữ, xoay vòng bảo mật mật khẩu database an toàn | 09/10/2026 | 09/10/2026 | [Secrets Manager](https://docs.aws.amazon.com/secretsmanager/) |
-| **7** | **Lab Tổng hợp 4** | Triển khai EC2 không giữ thông tin xác thực cứng, gọi API lấy mật khẩu DB từ Secrets Manager | 10/10/2026 | 10/10/2026 | [AWS Security Best Practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html) |
+| **2** | **IAM Identity Center** | Cấu hình AWS SSO, thiết lập cổng truy cập Access Portal và kích hoạt bảo mật MFA | 05/10/2026 | 05/10/2026 | [IAM Identity Center](https://docs.aws.amazon.com/singlesignon/) |
+| **3** | **IAM Policies nâng cao** | Viết custom JSON policy với Condition key `aws:SourceIp` giới hạn IP truy cập S3 Bucket | 06/10/2026 | 06/10/2026 | [IAM Policy Reference](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html) |
+| **4** | **Permission Boundaries** | Thiết lập ranh giới quyền hạn kiểm soát quyền tối đa, chặn truy cập ngoài phạm vi cho phép | 07/10/2026 | 07/10/2026 | [Permissions Boundaries](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) |
+| **5** | **IAM Roles cho EC2** | Tạo và gắn IAM Role cho EC2, xác minh truy cập S3/DynamoDB qua IMDS không cần lưu khóa | 08/10/2026 | 08/10/2026 | [IAM Roles for EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html) |
+| **6** | **AWS KMS & Encryption** | Tạo Customer Managed Key (`Key-KMS-LabT6`), cấu hình mã hóa EBS Volume và S3 Bucket | 09/10/2026 | 09/10/2026 | [AWS KMS](https://docs.aws.amazon.com/kms/) |
+| **7** | **Lab Tổng hợp 4** | Triển khai EC2 không giữ thông tin xác thực cứng, gọi API lấy secret từ Secrets Manager | 10/10/2026 | 10/10/2026 | [AWS Secrets Manager](https://docs.aws.amazon.com/secretsmanager/) |
 
 ### Kết quả đạt được tuần 4
 
-- Bật AWS IAM Identity Center tại `us-east-1` thành công, tạo Permission Set `DevReadOnly` và xác minh luồng đăng nhập SSO qua URL cổng truy cập AWS.
-- Viết custom IAM policies với các Condition key `aws:SourceIp`, `aws:RequestedRegion`, `aws:CurrentTime`; kiểm chứng tất cả kịch bản qua IAM Policy Simulator đều trả đúng kết quả.
-- Cấu hình Permission Boundary `DeveloperBoundary`, xác nhận quyền hiệu lực chỉ là giao của identity policy và boundary — kể cả `AdministratorAccess` cũng bị giới hạn.
-- Tạo IAM Role `EC2-S3-DynamoDB-Role` gắn vào EC2, xác minh truy cập S3 và DynamoDB không cần thông tin xác thực tĩnh qua `aws sts get-caller-identity`.
-- Lưu thông tin xác thực RDS `prod/myapp/db-password` vào Secrets Manager với mã hóa KMS, bật xoay vòng tự động 30 ngày qua Lambda.
-- Hoàn thành xuất sắc Lab Tổng hợp 4: kiến trúc zero-credential hoàn chỉnh — IMDS → IAM Role → Secrets Manager → KMS giải mã → mật khẩu trong bộ nhớ — không có thông tin xác thực nào ghi ra ổ đĩa.
+- Cấu hình thành công AWS IAM Identity Center (SSO) với cổng truy cập `ssoins-72232edfad9c07c3.portal.us-east-1.app.aws`, kích hoạt thiết bị MFA ảo `Admin-Users's MFA 1` bảo vệ tài khoản quản trị `Dũng Nguyễn Mạnh`.
+- Xây dựng IAM Policy nâng cao với Condition key `aws:SourceIp` áp dụng cho người dùng `LabT3-Test`, kiểm chứng thành công cơ chế chặn truy cập trái phép (`Insufficient permissions`) từ IP lạ và cho phép truy cập đầy đủ file `LabT3.html` từ IP hợp lệ.
+- Áp dụng thành công Permission Boundary cho người dùng `LabT3-Test`: dù có quyền IAM rộng, người dùng vẫn bị hệ thống từ chối triệt để khi truy cập EC2 (`Access denied`) và VPC (`ec2:DescribeAccountAttributes`, `ec2:DescribeVpcs`) do nằm ngoài ranh giới cho phép.
+- Triển khai máy chủ EC2 `Lab-T5` (`i-04c89eaec696a2cef`) gắn IAM Role riêng biệt, truy vấn thành công S3 bucket `labt3-test-ip-public` và DynamoDB `list-tables` mà không cần cấu hình file `~/.aws/credentials`.
+- Tạo Customer Managed Key `Key-KMS-LabT6` (`1c0663df-33b2-437c-a98f-cc38935054f8`), mã hóa thành công ổ đĩa EBS Volume và thiết lập Default Encryption chuẩn SSE-KMS kèm Bucket Key trên S3 Bucket `labt6-s3-kms`.
+- Hoàn thiện xuất sắc Lab Tổng hợp 4: triển khai EC2 instance `EC2-Secret-Role-T7` (`i-032c941e009326a97`), gọi lệnh `aws secretsmanager get-secret-value` lấy secret `secret-labt7` an toàn tuyệt đối từ bộ nhớ, không lưu trữ thông tin xác thực cứng trên máy chủ.
 
 ---
 
-#### Bài tập 1: IAM Identity Center — Quản lý đăng nhập SSO tập trung
+#### Bài tập 1: IAM Identity Center — Cấu hình AWS SSO & Kích hoạt MFA Tập trung
 
-AWS IAM Identity Center (trước đây là AWS SSO) cung cấp một điểm đăng nhập duy nhất cho tất cả tài khoản AWS và ứng dụng trong một AWS Organization. Tôi bắt đầu bằng cách bật IAM Identity Center tại vùng **us-east-1** và liên kết với tài khoản root của Organization. Dịch vụ tạo ra một **Identity Store** riêng biệt, đóng vai trò là nguồn thông tin danh tính chính thức.
+Khởi tạo và cấu hình dịch vụ **AWS IAM Identity Center** (trước đây là AWS Single Sign-On) tại Region `us-east-1` nhằm quản lý danh tính tập trung và phân quyền truy cập đa tài khoản:
+- **Cổng đăng nhập (Portal URL):** `https://ssoins-72232edfad9c07c3.portal.us-east-1.app.aws/#/security`
+- **Tài khoản người dùng:** `Dũng Nguyễn Mạnh` (Username hiển thị: `Dũng`)
+- **Thiết bị MFA đã đăng ký:** `Admin-Users's MFA 1`
+- **Loại thiết bị:** `Authenticator app` (Xác thực 2 bước trên ứng dụng di động)
+- **Thời gian khởi tạo MFA:** `Fri Oct 23 2026 11:03:00 GMT+0700 (Indochina Time)`
+- **Phiên đăng nhập hiện tại (Active Session):** `Desktop - Edge 155.0, Windows 10`
+- **Địa chỉ IP máy truy cập:** `115.78.22...` | **Thời gian phiên còn lại:** `7 hours 59 minutes`
 
-Sau khi bật dịch vụ, tôi tạo một **Permission Set** tên `DevReadOnly` bao gồm policy quản lý `ReadOnlyAccess`. Permission Set định nghĩa những gì người dùng IAM Identity Center có thể làm sau khi đăng nhập vào một tài khoản cụ thể. Tiếp theo, tôi tạo một user, gán Permission Set cho user đó trên tài khoản development, rồi kiểm tra luồng đăng nhập qua URL cổng truy cập AWS được tạo tự động.
+Cổng AWS Access Portal cho phép chuyển đổi giữa các tài khoản AWS trong Organization chỉ với một lần đăng nhập (SSO), hệ thống tự động cấp phát token phiên ngắn hạn mà không cần lưu trữ Access Key dài hạn trên máy tính cá nhân.
 
-URL cổng SSO theo định dạng `https://<subdomain>.awsapps.com/start`. Từ cổng này, người dùng có thể chuyển đổi giữa các tài khoản AWS chỉ bằng một cú nhấp chuột, và thông tin xác thực phiên tạm thời được tạo tự động trong nền — không cần access key dài hạn.
-
-> **Screenshot:** ![Bảng điều khiển IAM Identity Center SSO](/images/1-Worklog/week-04/01-iam-identity-center-sso.png)
+> **Screenshot:** ![Bảng điều khiển AWS Access Portal và thiết lập MFA](/images/1-Worklog/week-04/01-iam-identity-center-sso.png)
 
 ---
 
-#### Bài tập 2: IAM Policies nâng cao — Condition Keys
+#### Bài tập 2: IAM Policies nâng cao — Custom Policy & Condition Key Giới hạn IP
 
-Policy IAM thông thường cho phép hoặc từ chối hành động trên tài nguyên, nhưng **Condition keys** giúp policy trở nên linh hoạt hơn. Tôi tạo một custom policy cho phép `s3:GetObject` chỉ khi IP của người gọi thuộc dải CIDR nội bộ `203.0.113.0/24` thông qua condition key `aws:SourceIp`.
+Khởi tạo người dùng IAM mới mang tên **`LabT3-Test`** thuộc tài khoản `468502414950` (`Manhdung2507`) để thực hành phân quyền với **Condition Keys**.
+
+> **Screenshot:** ![Danh sách người dùng IAM quản lý trong hệ thống](/images/1-Worklog/week-04/02-iam-policy-json-editor.png)
+
+Thiết lập một custom policy JSON gán cho người dùng `LabT3-Test`, sử dụng Condition key `aws:SourceIp` để chỉ cho phép các thao tác `s3:ListBucket` và `s3:GetObject` tới S3 Bucket **`labt3-test-ip-public`** khi yêu cầu xuất phát từ đúng địa chỉ IP công cộng của quản trị viên:
 
 ```json
 {
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Sid": "AllowS3AccessFromCorporateIPOnly",
       "Effect": "Allow",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::my-intern-bucket/*",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::labt3-test-ip-public",
+        "arn:aws:s3:::labt3-test-ip-public/*"
+      ],
       "Condition": {
         "IpAddress": {
-          "aws:SourceIp": "203.0.113.0/24"
+          "aws:SourceIp": "115.78.22.0/24"
         }
       }
     }
@@ -71,115 +87,143 @@ Policy IAM thông thường cho phép hoặc từ chối hành động trên tà
 }
 ```
 
-Tôi cũng thử nghiệm `aws:RequestedRegion` để chỉ cho phép gọi API trong vùng `ap-southeast-1`, và `aws:CurrentTime` để giới hạn truy cập console trong giờ làm việc (08:00–18:00 UTC+7). Các Condition key này được IAM engine kiểm tra theo thời gian thực trước khi bất kỳ hành động nào được cho phép.
+Tiến hành kiểm thử truy cập theo 2 kịch bản:
+- **Kịch bản 1 (IP không hợp lệ / IP lạ):** Khi đăng nhập tài khoản `LabT3-Test` từ dải IP ngoài danh sách cho phép và truy cập bucket `labt3-test-ip-public`, AWS S3 lập tức chặn lại với thông báo lỗi màu đỏ: *"Insufficient permissions to list objects. After you or your AWS administrator has updated your permissions to allow the s3:ListBucket action, refresh the page."*
 
-> **Screenshot:** ![Trình soạn thảo JSON Policy với Condition Keys](/images/1-Worklog/week-04/02-iam-policy-json-editor.png)
+> **Screenshot:** ![Truy cập S3 bị từ chối do IP không nằm trong Condition Key](/images/1-Worklog/week-04/03-iam-condition-keys.png)
 
-Để xác minh policy, tôi sử dụng công cụ **IAM Policy Simulator** trong AWS Console. Công cụ này cho phép chọn user hoặc role, chỉ định action và resource, rồi xem chính xác câu lệnh policy nào khớp — Allow hay Deny — mà không cần thực hiện lời gọi API thực tế.
+- **Kịch bản 2 (IP hợp lệ):** Khi truy cập từ đúng địa chỉ IP đã khai báo trong Condition block, người dùng `LabT3-Test` duyệt bucket thành công và thấy tệp tin **`LabT3.html`** (Type: `html`, Size: `0 B`, Storage class: `Standard`).
 
-> **Screenshot:** ![Chi tiết cấu hình Condition Key](/images/1-Worklog/week-04/03-iam-condition-keys.png)
-
-Sau khi mô phỏng nhiều kịch bản (đúng IP, sai IP, trong giờ làm việc, ngoài giờ làm việc), tất cả kết quả đều đúng như kỳ vọng: yêu cầu từ CIDR không được phép hoặc ngoài khung giờ trả về `ImplicitDeny`.
-
-> **Screenshot:** ![Kết quả kiểm tra Policy Simulator](/images/1-Worklog/week-04/04-iam-policy-test-result.png)
+> **Screenshot:** ![Truy cập tệp tin S3 thành công khi kiểm tra đúng IP](/images/1-Worklog/week-04/04-iam-policy-test-result.png)
 
 ---
 
-#### Bài tập 3: Permission Boundaries — Giới hạn quyền tối đa
+#### Bài tập 3: Permission Boundaries — Thiết lập Ranh giới Quyền hạn Tối đa
 
-**Permission Boundary** là tính năng IAM nâng cao giúp thiết lập giới hạn quyền tối đa mà một identity-based policy có thể cấp cho IAM entity (user hoặc role). Dù policy của entity có cho phép một hành động, nếu permission boundary không cho phép, hành động đó vẫn bị từ chối. Tính năng này đặc biệt hữu ích cho quản trị ủy quyền — cho phép admin cấp dưới tạo IAM role nhưng ngăn leo thang đặc quyền.
+Cấu hình tính năng **Permission Boundary** cho người dùng **`LabT3-Test`** (`arn:aws:iam::468502414950:user/LabT3-Test`). Ranh giới chỉ cho phép tương tác với dịch vụ Amazon S3, cụ thể là bucket **`labt3-test-ip-public`** tại vùng `us-east-1`.
 
-Tôi tạo một boundary policy tên `DeveloperBoundary` chỉ cho phép `s3:*`, `dynamodb:*`, và `cloudwatch:GetMetric*`. Sau đó tạo IAM role `AppRole-Dev` và gắn boundary này qua AWS CLI:
+> **Screenshot:** ![S3 Bucket labt3-test-ip-public nằm trong phạm vi Permission Boundary](/images/1-Worklog/week-04/05-permission-boundary-setup.png)
+
+Tiến hành kiểm chứng cơ chế kiểm soát ranh giới quyền hạn:
+- **Kiểm tra trên EC2 Dashboard:** Khi người dùng `LabT3-Test` truy cập bảng điều khiển EC2, toàn bộ tài nguyên hiển thị trạng thái **`Access denied`**:
+  - `Dedicated Hosts:` ❌ Access denied
+  - `Key pairs:` ❌ Access denied
+  - `Security groups:` ❌ Access denied
+  - `Auto Scaling Groups:` ❌ Access denied
+  - `Elastic IPs:` ❌ Access denied
+  - `Load balancers:` ❌ Access denied
+  - `Instances (running):` ❌ Access denied
+  - `Volumes:` ❌ Access denied
+  - `Service health:` ❌ *You don't have permission to health:DescribeEvents.*
+
+> **Screenshot:** ![Bảng điều khiển EC2 bị từ chối truy cập toàn diện](/images/1-Worklog/week-04/06-permission-boundary-policy.png)
+
+- **Kiểm tra trên VPC Dashboard:** Khi truy cập trang quản lý VPC, giao diện xuất hiện banner cảnh báo lỗi màu đỏ từ chối thao tác:
+  - Thông báo: *"User: arn:aws:iam::468502414950:user/LabT3-Test is not authorized to perform: ec2:DescribeAccountAttributes because no permissions boundary allows the ec2:DescribeAccountAttributes action"*
+
+> **Screenshot:** ![Lỗi từ chối quyền DescribeAccountAttributes do Permission Boundary](/images/1-Worklog/week-04/07-permission-boundary-deny-test.png)
+
+- **Kiểm tra danh sách Your VPCs:** Hệ thống tiếp tục chặn truy vấn danh sách VPC với cảnh báo:
+  - Thông báo: *"User: arn:aws:iam::468502414950:user/LabT3-Test is not authorized to perform: ec2:DescribeVpcs because no permissions boundary allows the ec2:DescribeVpcs action"*
+
+> **Screenshot:** ![Lỗi từ chối quyền DescribeVpcs khi người dùng bị giới hạn quyền](/images/1-Worklog/week-04/08-permission-boundary-result.png)
+
+Kết quả kiểm thử chứng minh: Dù người dùng được gán chính sách quyền hạn rộng đến đâu, nếu hành động không nằm trong **Permission Boundary**, quyền hiệu lực thực tế vẫn là **Deny**, bảo vệ vững chắc tài nguyên quản trị.
+
+---
+
+#### Bài tập 4: IAM Roles cho EC2 — Truy cập Dịch vụ Không Cần Lưu Khóa Cứng
+
+Khởi chạy một máy chủ ảo EC2 chuyên dụng cho bài lab:
+- **Tên máy chủ:** **`Lab-T5`**
+- **Instance ID:** `i-04c89eaec696a2cef`
+- **Hệ điều hành:** Amazon Linux 2023
+- **Public IPv4:** `54.87.203.146`
+- **Private IPv4:** `172.31.34.206`
+- **Availability Zone:** `us-east-1`
+- **IAM Role gắn kết:** Cấp quyền đọc Amazon S3 (`s3:ListAllMyBuckets`, `s3:Get*`) và Amazon DynamoDB (`dynamodb:ListTables`).
+
+Kết nối vào instance qua SSH / EC2 Instance Connect và thực hiện kiểm tra quyền truy cập thông qua AWS CLI:
 
 ```bash
-aws iam create-role \
-  --role-name AppRole-Dev \
-  --assume-role-policy-document file://trust-policy.json \
-  --permissions-boundary arn:aws:iam::123456789012:policy/DeveloperBoundary
+# Liệt kê danh sách S3 Buckets qua Role
+[ec2-user@ip-172-31-34-206 ~]$ aws s3 ls
+2026-10-23 06:13:30 labt3-test-ip-public
+
+# Liệt kê danh sách bảng DynamoDB trong region us-east-1
+[ec2-user@ip-172-31-34-206 ~]$ aws dynamodb list-tables --region us-east-1
+{
+    "TableNames": []
+}
 ```
 
-> **Screenshot:** ![Thiết lập Permission Boundary trong Console](/images/1-Worklog/week-04/05-permission-boundary-setup.png)
+Cả hai lệnh đều thực thi thành công mỹ mãn mà không cần chạy lệnh `aws configure`, không tồn tại tệp tin `~/.aws/credentials`. Dịch vụ Instance Metadata Service (IMDSv2) tự động cung cấp thông tin xác thực tạm thời và định kỳ xoay vòng khóa, đảm bảo an toàn tối đa cho ứng dụng.
 
-Sau khi gắn boundary, tôi cũng gắn `AdministratorAccess` làm identity-based policy cho cùng role (cố ý đặt quyền quá rộng). Thử gọi `ec2:DescribeInstances` qua role này trả về `AccessDenied` vì EC2 không có trong boundary — minh chứng rằng boundary giới hạn quyền bất kể identity policy cho phép gì.
-
-> **Screenshot:** ![Chi tiết policy Permission Boundary](/images/1-Worklog/week-04/06-permission-boundary-policy.png)
-
-Tôi chỉnh sửa boundary để thêm `ec2:DescribeInstances` rồi kiểm tra lại — lần này lời gọi thành công, xác nhận boundary chính là yếu tố kiểm soát quyền truy cập.
-
-> **Screenshot:** ![Kết quả kiểm tra Deny với Boundary](/images/1-Worklog/week-04/07-permission-boundary-deny-test.png)
-
-Cuối cùng, tôi chạy IAM Policy Simulator có tính đến boundary và xác nhận quyền hiệu lực chỉ là giao giữa identity policy và boundary policy.
-
-> **Screenshot:** ![Kết quả cuối cùng Permission Boundary](/images/1-Worklog/week-04/08-permission-boundary-result.png)
+> **Screenshot:** ![Máy chủ EC2 thực thi lệnh S3 và DynamoDB thành công qua IAM Role](/images/1-Worklog/week-04/09-iam-role-ec2-attach.png)
 
 ---
 
-#### Bài tập 4: IAM Roles cho EC2 — Kiến trúc không lưu khóa cứng
+#### Bài tập 5: AWS KMS & Mã hóa Lưu trữ — Bảo vệ Ổ đĩa EBS & S3 Bucket
 
-Lưu thông tin xác thực AWS (`aws_access_key_id`, `aws_secret_access_key`) trực tiếp vào code hoặc biến môi trường của EC2 là lỗ hổng bảo mật nghiêm trọng. Giải pháp đúng đắn là gắn **IAM Role** cho EC2 instance. Dịch vụ Instance Metadata Service (IMDS) sẽ tự động cung cấp thông tin xác thực tạm thời, xoay vòng liên tục cho mọi tiến trình trên máy — không cần access key dài hạn.
+Khởi tạo một khóa mã hóa do người dùng quản lý (**Customer Managed Key - KMS Key**) mang bí danh (Alias) **`Key-KMS-LabT6`**:
+- **KMS Key ID:** `1c0663df-33b2-437c-a98f-cc38935054f8`
+- **KMS Key ARN:** `arn:aws:kms:us-east-1:468502414950:key/1c0663df-33b2-437c-a98f-cc38935054f8`
+- **Vùng hoạt động:** `us-east-1` (N. Virginia)
 
-Tôi tạo IAM role tên `EC2-S3-DynamoDB-Role` với trust policy cho EC2 và gắn hai managed policy: `AmazonS3ReadOnlyAccess` và `AmazonDynamoDBReadOnlyAccess`. Sau đó liên kết role với EC2 instance đang chạy qua AWS CLI:
+Ứng dụng khóa KMS vào 2 dịch vụ lưu trữ cốt lõi:
+- **Mã hóa khối lưu trữ EBS Volume:** Tạo ổ đĩa EBS mới và kích hoạt mã hóa dữ liệu. Bảng điều khiển EC2 Volumes hiển thị trạng thái:
+  - **Status check:** `Okay`
+  - **Encryption:** `Encrypted`
+  - **KMS key ID:** `1c0663df-33b...` (Liên kết trực tiếp tới alias `Key-KMS-LabT6`)
+
+> **Screenshot:** ![EBS Volume được mã hóa an toàn bằng Customer Managed Key](/images/1-Worklog/week-04/10-secrets-manager-create.png)
+
+- **Mã hóa kho lưu trữ đối tượng S3 Bucket:** Tạo S3 Bucket mang tên **`labt6-s3-kms`** và cấu hình **Default encryption**:
+  - **Encryption type:** `Server-side encryption with AWS Key Management Service keys (SSE-KMS)`
+  - **Encryption key ARN:** `arn:aws:kms:us-east-1:468502414950:key/1c0663df-33b2-437c-a98f-cc38935054f8`
+  - **Bucket Key:** `Enabled` (Tự động giảm tải số lượng API gọi đến KMS, tiết kiệm tới 99% chi phí giải mã)
+  - **Blocked encryption types:** `Server-Side Encryption with Customer-Provided Keys (SSE-C)`
+
+> **Screenshot:** ![S3 Bucket labt6-s3-kms cấu hình mã hóa mặc định SSE-KMS](/images/1-Worklog/week-04/11-secrets-manager-rotate.png)
+
+---
+
+#### Bài tập 6: Lab Tổng hợp 4 — Kiến trúc EC2 Không Lưu Khóa, Lấy Secret từ AWS Secrets Manager
+
+Xây dựng kiến trúc bảo mật cấp doanh nghiệp: Triển khai máy chủ ứng dụng EC2 hoàn toàn không lưu trữ bất kỳ thông tin mật khẩu hay chuỗi kết nối nào trong tệp cấu hình. Máy chủ được gắn IAM Role có quyền truy xuất dịch vụ **AWS Secrets Manager**:
+- **Tên máy chủ EC2:** **`EC2-Secret-Role-T7`**
+- **Instance ID:** `i-032c941e009326a97`
+- **Hệ điều hành:** Amazon Linux 2023
+- **Public IPv4:** `100.54.219.219`
+- **Private IPv4:** `172.31.7.232`
+- **Tên Secret:** `secret-labt7`
+- **Secret ARN:** `arn:aws:secretsmanager:us-east-1:468502414950:secret:secret-labt7-JCzzxK`
+- **Version ID:** `dfba26c0-ef0f-4379-8c7a-bd024eca8ef3`
+- **Trạng thái Version:** `["AWSCURRENT"]`
+
+Từ terminal của máy chủ `EC2-Secret-Role-T7`, thực hiện lệnh gọi API lấy mật khẩu an toàn lúc chạy:
 
 ```bash
-aws ec2 associate-iam-instance-profile \
-  --instance-id i-0abcdef1234567890 \
-  --iam-instance-profile Name=EC2-S3-DynamoDB-Role
+# Kết nối máy chủ EC2-Secret-Role-T7 (IP: 172.31.7.232)
+Last login: Sat Oct 31 15:19:14 2026 from 18.206.107.29
+
+# Gọi API AWS Secrets Manager lấy giá trị secret runtime
+[ec2-user@ip-172-31-7-232 ~]$ aws secretsmanager get-secret-value --secret-id secret-labt7 --region us-east-1
+{
+    "ARN": "arn:aws:secretsmanager:us-east-1:468502414950:secret:secret-labt7-JCzzxK",
+    "Name": "secret-labt7",
+    "VersionId": "dfba26c0-ef0f-4379-8c7a-bd024eca8ef3",
+    "SecretString": "{\"secretkey123\":\"Secretkey123\"}",
+    "VersionStages": [
+        "AWSCURRENT"
+    ],
+    "CreatedDate": "2026-10-31T15:09:04.069000+00:00"
+}
 ```
 
-> **Screenshot:** ![IAM Role được gắn vào EC2 Instance](/images/1-Worklog/week-04/09-iam-role-ec2-attach.png)
+Hệ thống trả về chính xác chuỗi JSON chứa khóa bí mật `{"secretkey123":"Secretkey123"}` ngay trong bộ nhớ RAM của tiến trình. Mô hình này triệt tiêu hoàn toàn nguy cơ rò rỉ khóa khi mã nguồn bị lộ hoặc máy chủ bị xâm nhập trái phép.
 
-Từ bên trong EC2, AWS CLI tự động sử dụng thông tin xác thực từ role mà không cần `aws configure`:
-
-```bash
-# Bên trong EC2 — không cần aws configure
-aws s3 ls s3://my-intern-bucket
-aws dynamodb list-tables --region ap-southeast-1
-
-# Xác minh danh tính
-aws sts get-caller-identity
-```
-
-Cả hai lệnh đều thành công và `aws sts get-caller-identity` xác nhận danh tính người gọi là IAM Role, không phải IAM user. Thông tin xác thực tạm thời được metadata service tự động làm mới trước khi hết hạn.
-
----
-
-#### Bài tập 5: AWS Secrets Manager — Lưu trữ & Xoay vòng thông tin xác thực an toàn
-
-Lưu mật khẩu database, API key dưới dạng plaintext (biến môi trường, file cấu hình, mã nguồn) là rủi ro bảo mật lớn. **AWS Secrets Manager** giải quyết vấn đề này bằng cách lưu trữ secret dưới dạng mã hóa (dùng AWS KMS) và cung cấp API lấy giá trị lúc runtime, không bao giờ lưu ra đĩa.
-
-Tôi tạo secret mới loại **RDS credentials** chứa username và password của MySQL RDS instance. Secrets Manager mã hóa giá trị và lưu dưới tên `prod/myapp/db-password`. Từ EC2 có role phù hợp, ứng dụng lấy secret khi khởi động:
-
-```python
-import boto3, json
-
-client = boto3.client('secretsmanager', region_name='ap-southeast-1')
-response = client.get_secret_value(SecretId='prod/myapp/db-password')
-secret = json.loads(response['SecretString'])
-DB_PASSWORD = secret['password']
-```
-
-> **Screenshot:** ![Tạo Secret trong Secrets Manager](/images/1-Worklog/week-04/10-secrets-manager-create.png)
-
-Tiếp theo tôi bật **xoay vòng tự động** với lịch 30 ngày. Secrets Manager sử dụng Lambda function (tự tạo cho loại RDS) để tạo mật khẩu mới, cập nhật trong RDS instance và lưu giá trị mới — tất cả không gây downtime. Ứng dụng chỉ cần gọi `get_secret_value` mỗi lần cần mật khẩu, không bao giờ cache hay lưu giá trị.
-
-> **Screenshot:** ![Cấu hình xoay vòng trong Secrets Manager](/images/1-Worklog/week-04/11-secrets-manager-rotate.png)
-
----
-
-#### Bài tập 6: Lab Tổng hợp 4 — Kiến trúc EC2 không có thông tin xác thực cứng
-
-Lab cuối tuần tích hợp tất cả kiến thức trong tuần vào một kiến trúc bảo mật cấp production: EC2 instance không lưu bất kỳ thông tin xác thực cứng nào, xác thực qua IAM Role và lấy mật khẩu database động từ Secrets Manager lúc runtime.
-
-Luồng kiến trúc hoạt động như sau:
-1. EC2 khởi động → IMDS cung cấp thông tin xác thực tạm thời cho `EC2-AppRole`
-2. Ứng dụng gọi `secretsmanager:GetSecretValue` lấy `prod/myapp/db-password`
-3. Secrets Manager kiểm tra IAM policy của role → trả về secret đã mã hóa
-4. KMS giải mã giá trị → ứng dụng nhận mật khẩu plaintext trong bộ nhớ
-5. Ứng dụng kết nối RDS bằng mật khẩu lấy được — không bao giờ ghi ra ổ đĩa
-
-Toàn bộ thành phần được triển khai qua AWS CLI và xác minh end-to-end. Kết quả `aws sts get-caller-identity` xác nhận không có thông tin xác thực IAM user nào tồn tại trên instance ở bất kỳ thời điểm nào.
-
-> **Screenshot:** ![Kiến trúc cuối Lab Tổng hợp 4](/images/1-Worklog/week-04/12-lab4-final-architecture.png)
+> **Screenshot:** ![EC2 lấy secret thành công từ AWS Secrets Manager](/images/1-Worklog/week-04/12-lab4-final-architecture.png)
 
 ---
 
@@ -187,10 +231,11 @@ Toàn bộ thành phần được triển khai qua AWS CLI và xác minh end-to-
 
 | Vấn đề | Nguyên nhân | Cách giải quyết |
 | :--- | :--- | :--- |
-| SSO bị vòng lặp đăng nhập sau khi bật Identity Center | DNS chưa propagate cho subdomain SSO | Chờ 5 phút và xóa cache trình duyệt trước khi thử lại |
-| `AccessDenied` khi kiểm tra Permission Boundary | `ec2:DescribeInstances` chưa có trong boundary policy | Bổ sung action EC2 cụ thể vào policy `DeveloperBoundary` |
-| Credentials của `aws configure` ghi đè role EC2 | File `~/.aws/credentials` còn lưu access key tĩnh | Xóa file `~/.aws/credentials`; thông tin xác thực lấy hoàn toàn qua IMDS |
-| `ResourceNotFoundException` trong Secrets Manager | Tên secret phân biệt hoa thường, gõ sai trong code | Sửa tên từ `prod/myapp/DB-password` thành `prod/myapp/db-password` |
+| Không thể truy cập S3 Bucket dù đã gắn Policy cho User | Condition key `aws:SourceIp` chặn các địa chỉ IP không nằm trong dải cho phép | Kiểm tra IP công cộng thực tế hiện tại của máy và cập nhật dải CIDR chính xác vào Condition block |
+| Lỗi `AccessDenied` khi thao tác trên EC2/VPC console | Người dùng bị giới hạn bởi Permission Boundary (chỉ cho phép S3) | Đây là hành vi đúng của Permission Boundary nhằm cô lập quyền hạn; nếu cần thao tác EC2/VPC thì quản trị viên phải cập nhật Boundary Policy |
+| Lỗi `ec2:DescribeAccountAttributes` khi vào giao diện VPC | Ranh giới quyền hạn không cấp quyền mô tả thuộc tính tài khoản | Bổ sung action `ec2:DescribeAccountAttributes` vào chính sách ranh giới quyền hạn nếu muốn người dùng xem được giao diện VPC |
+| Lệnh gọi Secrets Manager trên EC2 bị lỗi Unauthorized | Instance Profile của EC2 chưa được cấp quyền `secretsmanager:GetSecretValue` | Gắn IAM Policy cho phép action `secretsmanager:GetSecretValue` tới đúng ARN của secret `secret-labt7` vào IAM Role của máy chủ |
+| Chi phí gọi KMS API tăng khi có nhiều lượt đọc trên S3 | Mỗi lần đọc object mã hóa SSE-KMS đều phát sinh một request giải mã tới KMS | Kích hoạt tính năng **Bucket Key** trong cấu hình Default Encryption của S3 để giảm tới 99% chi phí gọi KMS |
 
 ### Kế hoạch tuần 5: Giám sát & Bảo mật
 

@@ -23,7 +23,7 @@ Thông thường và cũng là tiêu chuẩn, một worklog được thực hi�
 
 **Tuần 4:** [Phân quyền & IAM](1.4-week4/)
 
-**Tuần 5:** [Làm công việc D...](1.5-week5/)
+**Tuần 5:** [Bảo mật hệ thống](1.5-week5/)
 
 **Tuần 6:** [Làm công việc E...](1.6-week6/)
 
@@ -38,3 +38,4 @@ Thông thường và cũng là tiêu chuẩn, một worklog được thực hi�
 **Tuần 11:** [Làm công việc M...](1.11-week11/)
 
 **Tuần 12:** [Làm công việc N...](1.12-week12/)
+

@@ -33,7 +33,7 @@ Thông thường và cũng là tiêu chuẩn, một worklog được thực hi�
 
 **Tuần 9:** [Containers (Docker)](1.9-week9/)
 
-**Tuần 10:** [Làm công việc L...](1.10-week10/)
+**Tuần 10:** [EKS & CI/CD](1.10-week10/)
 
 **Tuần 11:** [Làm công việc M...](1.11-week11/)
 

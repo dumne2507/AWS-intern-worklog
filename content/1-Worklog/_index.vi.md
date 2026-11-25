@@ -31,7 +31,7 @@ Thông thường và cũng là tiêu chuẩn, một worklog được thực hi�
 
 **Tuần 8:** [Serverless](1.8-week8/)
 
-**Tuần 9:** [Làm công việc I...](1.9-week9/)
+**Tuần 9:** [Containers (Docker)](1.9-week9/)
 
 **Tuần 10:** [Làm công việc L...](1.10-week10/)
 

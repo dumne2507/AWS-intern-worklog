@@ -101,3 +101,7 @@ Sau khi nâng cấp kiến trúc từ mô hình Web Scale cơ bản lên **Read-
 - **Amazon RDS Multi-AZ vs. Read Replicas:** <https://aws.amazon.com/rds/features/read-replicas/>
 - **Amazon ElastiCache Pricing (`ap-southeast-1`):** <https://aws.amazon.com/elasticache/pricing/>
 - **Best Practices for Amazon RDS:** <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_BestPractices.html>
+
+---
+
+**Link bài viết gốc trên AWS Study Group:** <https://www.facebook.com/share/p/19pPm2zNwx/>

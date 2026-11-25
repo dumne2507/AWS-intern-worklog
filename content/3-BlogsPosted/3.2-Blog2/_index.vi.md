@@ -101,3 +101,7 @@ Từ thời điểm này:
 - **Amazon VPC & NAT Gateway Pricing:** <https://aws.amazon.com/vpc/pricing/>
 - **AWS PrivateLink Pricing:** <https://aws.amazon.com/privatelink/pricing/>
 - **AWS Managed Prefix Lists:** `https://docs.aws.amazon.com/.../managed-prefix-lists.html`
+
+---
+
+**Link bài viết gốc trên AWS Study Group:** <https://www.facebook.com/share/p/154F8Gp26wY/>

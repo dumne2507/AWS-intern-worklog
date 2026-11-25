@@ -27,7 +27,7 @@ Thông thường và cũng là tiêu chuẩn, một worklog được thực hi�
 
 **Tuần 6:** [Quản trị Vận hành](1.6-week6/)
 
-**Tuần 7:** [Làm công việc G...](1.7-week7/)
+**Tuần 7:** [IaC (Code hạ tầng)](1.7-week7/)
 
 **Tuần 8:** [Làm công việc H...](1.8-week8/)
 

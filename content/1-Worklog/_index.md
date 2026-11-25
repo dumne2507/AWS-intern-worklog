@@ -26,7 +26,7 @@ Typically, and as a standard, a worklog is carried out over about 3 months (thro
 
 **Week 6:** [Operations Management](1.6-week6/)
 
-**Week 7:** [Doing task G...](1.7-week7/)
+**Week 7:** [Infrastructure as Code (IaC)](1.7-week7/)
 
 **Week 8:** [Doing task H...](1.8-week8/)
 

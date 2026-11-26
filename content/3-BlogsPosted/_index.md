@@ -16,5 +16,6 @@ Dissects the database bottleneck problem when an Auto Scaling Web tier hits high
 Uncovers the hidden NAT Gateway data processing cost trap when EC2 instances in Private Subnets communicate with Amazon S3 / DynamoDB in the same region, and walks through implementing a 100% free **VPC Gateway Endpoint** alongside four real-world configuration pitfalls.  
 🔗 **Original Post:** <https://www.facebook.com/share/p/154F8Gp26wY/>
 
-### [Blog 3 - Coming Soon...](3.3-Blog3/)
-The next article is currently in progress and will be added soon.
+### [Blog 3 - Re-running Last Week's Pipeline Gives Totally Different Numbers: Code Change or Overwritten S3 File?](3.3-Blog3/)
+Analyzes why auditing historical pipelines on mutable S3 keys produces mismatched results, explains the `ETag` pitfall with Multipart Uploads / SSE-KMS, and presents a 100% reproducible architecture combining **Amazon S3 Versioning**, a **DynamoDB Manifest**, and **SHA-256** checksums.  
+🔗 **Original Post:** <https://www.facebook.com/share/p/151HogtQqMT/>

@@ -16,5 +16,6 @@ Bóc tách nguyên nhân gây nghẽn cổ chai Database khi tầng Web đã b�
 Phân tích bẫy chi phí truyền dữ liệu nội bộ qua NAT Gateway khi EC2 trong Private Subnet giao tiếp với Amazon S3 / DynamoDB cùng Region, và hướng dẫn cách định tuyến qua **VPC Gateway Endpoint** miễn phí 100% kèm 4 lưu ý cấu hình bảo mật thực tế.  
 🔗 **Link bài viết gốc:** <https://www.facebook.com/share/p/154F8Gp26wY/>
 
-### [Blog 3 - Đang cập nhật...](3.3-Blog3/)
-Bài viết tiếp theo đang trong quá trình hoàn thiện và sẽ được bổ sung trong thời gian tới.
+### [Blog 3 - Chạy lại pipeline tuần trước mà ra số khác hẳn: do code sửa hay do file trên S3 bị ghi đè?](3.3-Blog3/)
+Phân tích nguyên nhân sai lệch số liệu khi đối soát pipeline cũ trên đường dẫn S3 cố định, lý giải bẫy `ETag` với Multipart Upload / SSE-KMS, và trình bày kiến trúc kết hợp **Amazon S3 Versioning**, bảng kê **DynamoDB Manifest** cùng mã băm **SHA-256** để tái lập dữ liệu chính xác 100%.  
+🔗 **Link bài viết gốc:** <https://www.facebook.com/share/p/151HogtQqMT/>

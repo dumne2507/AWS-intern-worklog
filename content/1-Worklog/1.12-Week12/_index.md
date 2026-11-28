@@ -1,57 +1,121 @@
 ---
 title: "Week 12 Worklog"
-date: 2024-01-01
+date: 2026-11-28
 weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+## Week 12 Objectives: Data Analytics & Program Wrap-up
 
-### Week 12 Objectives:
+- **AWS Data Lake Architecture:** Understand and design a centralized **Data Lake** on **Amazon S3**, implementing layered storage zones, time-based partitioning, encryption, and fine-grained IAM/Bucket access control for raw and curated datasets.
+- **Serverless SQL Analytics:** Leverage **Amazon Athena** alongside the **AWS Glue Data Catalog** to query unstructured and semi-structured data (`.csv`, `.json`, `.parquet`) directly on Amazon S3 using standard SQL without managing cluster infrastructure.
+- **Advanced Cloud Cost Optimization:** Master long-term financial commitment strategies using **AWS Savings Plans** and **Reserved Instances (RI)**, supported by **AWS Cost Explorer** and **AWS Budgets**.
+- **12-Week Architecture Consolidation & Cost Hygiene:** Synthesize all AWS architectures built across the 12-week internship and execute a comprehensive resource audit and cleanup checklist to prevent unexpected billing charges.
+- **Hugo Documentation & GitHub Pages Delivery:** Standardize the bilingual **Hugo** repository structure, synchronize all content to **GitHub**, and publish the official internship worklog site via **GitHub Actions** and **GitHub Pages**.
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+### Tasks to be carried out this week
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Day | Topic | Task | Start Date | Completion Date | Reference Material |
+| :---: | :--- | :--- | :---: | :---: | :--- |
+| **Mon** | **AWS Data Lake with S3** | Design multi-zone S3 Data Lake architecture (`raw-zone/`, `processed-zone/`), partitioning, encryption & IAM least privilege | 30/11/2026 | 30/11/2026 | [Data Lakes on AWS](https://docs.aws.amazon.com/whitepapers/latest/building-data-lakes/building-data-lake-aws.html) |
+| **Tue** | **Serverless Query with Athena** | Understand AWS Glue Data Catalog / Crawlers, configure Athena Query Result Location, optimize SQL & Parquet scanning costs | 01/12/2026 | 01/12/2026 | [Amazon Athena User Guide](https://docs.aws.amazon.com/athena/latest/ug/) |
+| **Wed** | **Advanced Cost Management** | Compare Compute/EC2 Savings Plans vs. Standard/Convertible Reserved Instances; review Cost Explorer & AWS Budgets | 02/12/2026 | 02/12/2026 | [AWS Savings Plans](https://docs.aws.amazon.com/savingsplans/latest/userguide/) |
+| **Thu** | **Project Assessment & Cleanup** | Consolidate 12-week AWS architecture review and perform full resource cleanup & billing audit across regions | 03/12/2026 | 03/12/2026 | [AWS Billing & Cost Management](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/) |
+| **Fri** | **Hugo Wrap-up & GitHub Structure** | Review 12-week bilingual markdown consistency, standardize Hugo folders, and verify GitHub Actions deployment pipeline | 04/12/2026 | 04/12/2026 | [Hugo Documentation](https://gohugo.io/documentation/) |
+| **Sat** | **Final Verification & Publication** | Run end-to-end site build checks, validate live GitHub Pages deployment, and finalize the 12-week internship report | 05/12/2026 | 05/12/2026 | [GitHub Pages Docs](https://docs.github.com/en/pages) |
 
+### Week 12 Key Outcomes
 
-### Week 12 Achievements:
+- Designed a production-ready **S3 Data Lake** blueprint separating landing (`raw-zone/`), analytics-optimized (`processed-zone/`), and query output (`athena-results/`) layers with hierarchical partitions (`year=/month=/day=`) and SSE-S3/SSE-KMS encryption.
+- Documented the serverless analytics pipeline connecting **AWS Glue Crawlers**, **Glue Data Catalog**, and **Amazon Athena** (Presto/Trino), including cost-reduction best practices (columnar Parquet conversion, partition pruning, and avoiding `SELECT *`) that cut scanned data volume by 70–90%.
+- Evaluated enterprise discount models (**Compute Savings Plans**, **EC2 Instance Savings Plans**, **Standard/Convertible Reserved Instances**) to save up to **66–72%** over On-Demand pricing on steady-state workloads.
+- Completed a full 12-week **Cost Hygiene** audit and consolidated the entire bilingual internship report repository for automated **GitHub Pages** publication via GitHub Actions.
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+---
 
-* Successfully created and configured an AWS Free Tier account.
+### Detailed Daily Notes
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+#### Day 1 (Monday): Building an AWS Data Lake with Amazon S3
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+- **Core Concept:** A Data Lake provides centralized storage for massive volumes of raw, heterogeneous data without requiring a rigid upfront schema (**Schema-on-Read**), making it suitable for analytics, BI dashboards, and Machine Learning workloads.
+- **Layered Storage Architecture (Zones) on Amazon S3:**
+  - `raw-zone/` (**Landing Zone**): Stores immutable raw data ingested from upstream sources (application logs, IoT telemetry, database exports) in formats such as `.csv` or `.json`.
+  - `processed-zone/` (**Curated Zone**): Stores cleansed, normalized, and transformed datasets converted into columnar, query-optimized formats like **Apache Parquet** or **ORC**.
+  - `athena-results/`: Dedicated bucket or prefix storing query outputs and metadata files generated by Amazon Athena.
+- **Optimization & Security Controls:**
+  - **Time-Based Partitioning:** Organizing S3 prefixes hierarchically (for example, `s3://datalake-bucket/raw/year=2026/month=11/day=28/`) enables analytical engines to skip irrelevant directories, lowering **Data Scanned** and accelerating query execution.
+  - **Access Governance & Encryption:** Enforce the **Least Privilege** principle using granular **IAM Policies** and **S3 Bucket Policies**, combined with **S3 Block Public Access** and default encryption at rest (**SSE-S3** or **SSE-KMS**).
 
-* Used AWS CLI to perform basic operations such as:
+---
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+#### Day 2 (Tuesday): Serverless Data Querying with Amazon Athena
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+- **Operating Architecture:** **Amazon Athena** is an interactive serverless query service built on open-source **Presto / Trino** engines, enabling standard SQL queries directly against objects stored in Amazon S3 with zero cluster provisioning or server maintenance.
+- **Standard Implementation Workflow:**
+  1. **Metadata Discovery via AWS Glue Data Catalog:** Run an **AWS Glue Crawler** over target S3 prefixes to automatically infer column schemas and register table definitions inside a Glue Database, or define external tables explicitly via `CREATE EXTERNAL TABLE` DDL statements.
+  2. **Query Result Location:** Configure an output S3 destination (`.csv` and `.metadata` artifacts) in Athena Workgroup settings prior to executing queries.
+  3. **SQL Execution & Cost Optimization:**
+     - Athena uses a pay-per-query pricing model charged strictly by the volume of data scanned (**\$5 per 1 TB of data scanned**).
+     - **Cost-Reduction Techniques:** Filter with `WHERE` clauses targeting partition columns (`year`, `month`, `day`), avoid `SELECT *` by projecting only required columns, compress payloads (GZIP/Snappy), and convert row-based formats into columnar **Apache Parquet** to reduce scanned data volume by **70–90%**.
+
+---
+
+#### Day 3 (Wednesday): Advanced Cost Optimization (Savings Plans & Reserved Instances)
+
+- **Long-Term Budget Strategy:** While **On-Demand** pricing delivers maximum elasticity, unit costs accumulate rapidly for steady 24/7 production workloads. AWS offers 1-year and 3-year commitment models delivering up to **72% savings** compared to On-Demand rates.
+- **In-Depth Comparison: Savings Plans vs. Reserved Instances (RI):**
+
+| Criterion | Savings Plans | Reserved Instances (RI) |
+| :--- | :--- | :--- |
+| **Commitment Unit** | Hourly spend commitment (**\$/hour**) over a 1-year or 3-year term. | Specific resource configuration commitment (Instance type, Region, OS/Engine) over a 1-year or 3-year term. |
+| **Coverage Scope** | **Compute Savings Plans:** Automatically apply across EC2, AWS Fargate, and AWS Lambda regardless of Region, OS, or instance family.<br>**EC2 Instance Savings Plans:** Apply to a specific instance family (e.g., `t3`, `m5`) within a chosen Region. | Apply strictly to the matched instance type and Region (**Standard RI**), or allow family/OS exchanges of equal or greater value (**Convertible RI**). |
+| **Maximum Discount** | Up to **66%** (Compute) and **72%** (EC2 Instance). | Up to **72%** (Standard RI). |
+| **Flexibility** | **Very High** — discounts carry over seamlessly when workloads modernize from EC2 to containers (ECS/Fargate) or serverless (Lambda). | **Lower** — best suited for predictable, fixed-architecture stateful services such as Amazon RDS, ElastiCache, and OpenSearch. |
+
+- **Decision & Monitoring Tooling:** Analyze 30–60 days of historical utilization via **AWS Cost Explorer (*Recommendations*)** to right-size commitments, paired with **AWS Budgets** to trigger automated email/Amazon SNS spending threshold alerts.
+
+---
+
+#### Day 4 (Thursday): Project Assessment & Resource Cleanup (Cost Hygiene)
+
+- **12-Week AWS Architecture Consolidation:**
+  - **Networking & Security Foundation:** Designed Multi-AZ VPC topologies with Public/Private Subnets, NAT Gateways, Security Groups, and Network ACLs; enforced identity governance using IAM Identity Center, Permission Boundaries, AWS CloudTrail, and KMS.
+  - **Compute, Containers & CI/CD:** Deployed Auto Scaling EC2 fleets behind Application Load Balancers (ALB), containerized services onto Amazon ECS Fargate, Lightsail Containers, and Amazon EKS, and automated release pipelines with CodeCommit, CodeBuild, and CodePipeline.
+  - **Databases & Cloud Migration:** Managed Multi-AZ Amazon RDS, executed VM Lift-and-Shift migrations (`import-image`), and performed continuous Full Load + CDC migrations using **AWS DMS**.
+  - **Serverless, GenAI & Event-Driven Systems:** Refactored monolithic workflows into decoupled microservices via API Gateway, AWS Lambda, DynamoDB, EventBridge, and SQS, alongside serverless GenAI integrations (Amazon Bedrock & Amazon Location Service).
+- **Resource Audit & Cleanup Procedure (Cost Hygiene):**
+  1. Inspect **Bills** and **Cost Explorer** in the AWS Billing Console to identify any regions still generating hourly or storage charges.
+  2. Decommission hourly billed compute and managed resources first: stop and delete **DMS Replication Instances & Tasks**, delete **RDS Instances** (unchecking *Create final snapshot* for lab environments), scale down/delete **ECS/EKS Clusters**, delete **NAT Gateways**, and release idle **Elastic IPs**.
+  3. Terminate all **EC2 Instances**, remove **Load Balancers (ALB/CLB)**, and delete orphaned **EBS Volumes** and **EBS Snapshots**.
+  4. Empty and delete **S3 Buckets**, remove **DynamoDB Tables**, **SQS Queues**, **EventBridge Rules**, **CloudFront Distributions**, and **Lambda Functions**.
+
+---
+
+#### Day 5 (Friday): Hugo Wrap-up & GitHub Repository Standardization
+
+- **12-Week Content Review:** Audited formatting consistency across all Markdown files (`_index.md` and `_index.vi.md`), verified bilingual parity, checked architecture diagrams and lab screenshots, and summarized hands-on troubleshooting lessons from Week 1 through Week 12.
+- **Standardized Hugo Site Repository Layout (`hugo-theme-learn`):**
+  ```text
+  ├── hugo.toml                        # Site baseURL, hugo-theme-learn config, language menus & shortcuts
+  ├── content/
+  │   ├── _index.md / _index.vi.md     # Internship report landing page (EN / VI)
+  │   ├── 1-Worklog/
+  │   │   ├── _index.md / _index.vi.md # 12-week worklog overview & navigation index
+  │   │   └── 1.1-Week1/ ... 1.12-Week12/ # Weekly worklogs with screenshots and lab notes
+  │   ├── 2-Proposal/ ... 7-Feedback/  # Project proposal, blogs, events, workshop, self-eval & feedback
+  ├── static/
+  │   └── images/                      # Static screenshots and diagrams organized by section & week
+  └── .github/
+      └── workflows/
+          └── hugo.yml                 # Automated GitHub Actions build and GitHub Pages deploy pipeline
+  ```
+
+---
+
+#### Day 6 (Saturday): Final Verification & GitHub Pages Publication
+
+- **Pre-Deployment Checklist:**
+  - Verified clean compilation using `hugo --minify` with zero broken internal links or missing static image assets across both English (`/`) and Vietnamese (`/vi/`) language trees.
+  - Synchronized all updated markdown documents and static image folders to the `main` branch on GitHub (`dumne2507/AWS-intern-worklog`).
+  - Confirmed the `.github/workflows/hugo.yml` GitHub Actions workflow builds and publishes the generated `public/` bundle onto the `gh-pages` branch so the official **AWS First Cloud AI Journey** internship worklog website is live and accessible online.

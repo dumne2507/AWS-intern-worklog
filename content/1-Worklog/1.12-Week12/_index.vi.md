@@ -24,8 +24,7 @@ pre: " <b> 1.12. </b> "
 | **3** | **Truy vấn với Amazon Athena** | Tìm hiểu AWS Glue Data Catalog / Crawler, cấu hình Query Result Location, tối ưu SQL & Parquet | 01/12/2026 | 01/12/2026 | [Amazon Athena User Guide](https://docs.aws.amazon.com/athena/latest/ug/) |
 | **4** | **Quản lý Chi phí Nâng cao** | So sánh Savings Plans và Reserved Instances (RI), ứng dụng Cost Explorer & AWS Budgets | 02/12/2026 | 02/12/2026 | [AWS Savings Plans](https://docs.aws.amazon.com/savingsplans/latest/userguide/) |
 | **5** | **Đánh giá & Dọn dẹp tài nguyên** | Hệ thống hóa kiến trúc 12 tuần, kiểm tra Billing và xóa sạch tài nguyên tránh phát sinh phí | 03/12/2026 | 03/12/2026 | [AWS Billing & Cost Management](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/) |
-| **6** | **Chuẩn hóa Hugo trên GitHub** | Rà soát nội dung 12 tuần song ngữ, chuẩn hóa thư mục Hugo và kiểm tra workflow `hugo.yml` | 04/12/2026 | 04/12/2026 | [Hugo Documentation](https://gohugo.io/documentation/) |
-| **7** | **Nghiệm thu & Xuất bản Website** | Kiểm thử build `hugo --minify`, xác thực triển khai GitHub Pages và hoàn tất báo cáo | 05/12/2026 | 05/12/2026 | [GitHub Pages Docs](https://docs.github.com/en/pages) |
+| **6** | **Chuẩn hóa Hugo & Xuất bản GitHub** | Rà soát nội dung 12 tuần song ngữ, chuẩn hóa thư mục Hugo, kiểm tra `hugo.yml` & xuất bản GitHub Pages | 04/12/2026 | 04/12/2026 | [Hugo Documentation](https://gohugo.io/documentation/) |
 
 ### Kết quả đạt được tuần 12
 
@@ -112,12 +111,3 @@ pre: " <b> 1.12. </b> "
       └── workflows/
           └── hugo.yml                 # Pipeline GitHub Actions tự động build và deploy lên GitHub Pages
   ```
-
----
-
-#### Thứ 7: Kiểm thử Build & Xuất bản Website chính thức
-
-- **Nghiệm thu triển khai:**
-  - Chạy kiểm thử biên dịch toàn bộ website bằng lệnh `hugo --minify` đảm bảo không có lỗi cú pháp Markdown, thiếu ảnh tĩnh hoặc hỏng liên kết nội bộ trên cả hai phiên bản Tiếng Anh (`/`) và Tiếng Việt (`/vi/`).
-  - Đồng bộ mã nguồn hoàn chỉnh lên nhánh `main` của kho lưu trữ GitHub (`dumne2507/AWS-intern-worklog`).
-  - Xác nhận workflow `.github/workflows/hugo.yml` tự động build và đẩy thư mục `public/` sang nhánh `gh-pages`, chính thức xuất bản trang Worklog báo cáo thực tập chương trình **First Cloud AI Journey**.

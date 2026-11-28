@@ -22,8 +22,7 @@ pre: " <b> 1.12. </b> "
 | **Tue** | **Serverless Query with Athena** | Understand AWS Glue Data Catalog / Crawlers, configure Athena Query Result Location, optimize SQL & Parquet scanning costs | 01/12/2026 | 01/12/2026 | [Amazon Athena User Guide](https://docs.aws.amazon.com/athena/latest/ug/) |
 | **Wed** | **Advanced Cost Management** | Compare Compute/EC2 Savings Plans vs. Standard/Convertible Reserved Instances; review Cost Explorer & AWS Budgets | 02/12/2026 | 02/12/2026 | [AWS Savings Plans](https://docs.aws.amazon.com/savingsplans/latest/userguide/) |
 | **Thu** | **Project Assessment & Cleanup** | Consolidate 12-week AWS architecture review and perform full resource cleanup & billing audit across regions | 03/12/2026 | 03/12/2026 | [AWS Billing & Cost Management](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/) |
-| **Fri** | **Hugo Wrap-up & GitHub Structure** | Review 12-week bilingual markdown consistency, standardize Hugo folders, and verify GitHub Actions deployment pipeline | 04/12/2026 | 04/12/2026 | [Hugo Documentation](https://gohugo.io/documentation/) |
-| **Sat** | **Final Verification & Publication** | Run end-to-end site build checks, validate live GitHub Pages deployment, and finalize the 12-week internship report | 05/12/2026 | 05/12/2026 | [GitHub Pages Docs](https://docs.github.com/en/pages) |
+| **Fri** | **Hugo Wrap-up & GitHub Publication** | Review 12-week bilingual markdown consistency, standardize Hugo folders, verify GitHub Actions & publish GitHub Pages | 04/12/2026 | 04/12/2026 | [Hugo Documentation](https://gohugo.io/documentation/) |
 
 ### Week 12 Key Outcomes
 
@@ -110,12 +109,3 @@ pre: " <b> 1.12. </b> "
       └── workflows/
           └── hugo.yml                 # Automated GitHub Actions build and GitHub Pages deploy pipeline
   ```
-
----
-
-#### Day 6 (Saturday): Final Verification & GitHub Pages Publication
-
-- **Pre-Deployment Checklist:**
-  - Verified clean compilation using `hugo --minify` with zero broken internal links or missing static image assets across both English (`/`) and Vietnamese (`/vi/`) language trees.
-  - Synchronized all updated markdown documents and static image folders to the `main` branch on GitHub (`dumne2507/AWS-intern-worklog`).
-  - Confirmed the `.github/workflows/hugo.yml` GitHub Actions workflow builds and publishes the generated `public/` bundle onto the `gh-pages` branch so the official **AWS First Cloud AI Journey** internship worklog website is live and accessible online.

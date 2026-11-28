@@ -1,108 +1,278 @@
 ---
 title: "Bản đề xuất"
-date: 2024-01-01
+date: 2026-09-14
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-Tại phần này, bạn cần tóm tắt các nội dung trong workshop mà bạn **dự tính** sẽ làm.
+# BẾP THÔNG MINH
+## NỀN TẢNG BẾP THÔNG MINH
 
-# IoT Weather Platform for Lab Research  
-## Giải pháp AWS Serverless hợp nhất cho giám sát thời tiết thời gian thực  
+Đề xuất xây dựng nền tảng hỗ trợ khám phá ẩm thực, nấu ăn tại nhà và tìm kiếm địa điểm cung cấp nguyên liệu.
 
-### 1. Tóm tắt điều hành  
-IoT Weather Platform được thiết kế dành cho nhóm *ITea Lab* tại TP. Hồ Chí Minh nhằm nâng cao khả năng thu thập và phân tích dữ liệu thời tiết. Nền tảng hỗ trợ tối đa 5 trạm thời tiết, có khả năng mở rộng lên 10–15 trạm, sử dụng thiết bị biên Raspberry Pi kết hợp cảm biến ESP32 để truyền dữ liệu qua MQTT. Nền tảng tận dụng các dịch vụ AWS Serverless để cung cấp giám sát thời gian thực, phân tích dự đoán và tiết kiệm chi phí, với quyền truy cập giới hạn cho 5 thành viên phòng lab thông qua Amazon Cognito.  
+| Thông tin | Chi tiết |
+|---|---|
+| Kho mã nguồn dự án | https://github.com/veexto/AWS-Final-Project-Cooking/tree/main |
+| Website đã triển khai | https://d18x1ou8x7botm.cloudfront.net/ |
+| Khu vực AWS | Asia Pacific (Singapore) – ap-southeast-1 |
+| Ngày lập | Tháng 11/2026 |
 
-### 2. Tuyên bố vấn đề  
-*Vấn đề hiện tại*  
-Các trạm thời tiết hiện tại yêu cầu thu thập dữ liệu thủ công, khó quản lý khi có nhiều trạm. Không có hệ thống tập trung cho dữ liệu hoặc phân tích thời gian thực, và các nền tảng bên thứ ba thường tốn kém và quá phức tạp.  
+---
 
-*Giải pháp*  
-Nền tảng sử dụng AWS IoT Core để tiếp nhận dữ liệu MQTT, AWS Lambda và API Gateway để xử lý, Amazon S3 để lưu trữ (bao gồm data lake), và AWS Glue Crawlers cùng các tác vụ ETL để trích xuất, chuyển đổi, tải dữ liệu từ S3 data lake sang một S3 bucket khác để phân tích. AWS Amplify với Next.js cung cấp giao diện web, và Amazon Cognito đảm bảo quyền truy cập an toàn. Tương tự như Thingsboard và CoreIoT, người dùng có thể đăng ký thiết bị mới và quản lý kết nối, nhưng nền tảng này hoạt động ở quy mô nhỏ hơn và phục vụ mục đích sử dụng nội bộ. Các tính năng chính bao gồm bảng điều khiển thời gian thực, phân tích xu hướng và chi phí vận hành thấp.  
+# 1. Bối cảnh và động lực thực hiện
 
-*Lợi ích và hoàn vốn đầu tư (ROI)*  
-Giải pháp tạo nền tảng cơ bản để các thành viên phòng lab phát triển một nền tảng IoT lớn hơn, đồng thời cung cấp nguồn dữ liệu cho những người nghiên cứu AI phục vụ huấn luyện mô hình hoặc phân tích. Nền tảng giảm bớt báo cáo thủ công cho từng trạm thông qua hệ thống tập trung, đơn giản hóa quản lý và bảo trì, đồng thời cải thiện độ tin cậy dữ liệu. Chi phí hàng tháng ước tính 0,66 USD (theo AWS Pricing Calculator), tổng cộng 7,92 USD cho 12 tháng. Tất cả thiết bị IoT đã được trang bị từ hệ thống trạm thời tiết hiện tại, không phát sinh chi phí phát triển thêm. Thời gian hoàn vốn 6–12 tháng nhờ tiết kiệm đáng kể thời gian thao tác thủ công.  
+## 1.1. Bối cảnh dự án
 
-### 3. Kiến trúc giải pháp  
-Nền tảng áp dụng kiến trúc AWS Serverless để quản lý dữ liệu từ 5 trạm dựa trên Raspberry Pi, có thể mở rộng lên 15 trạm. Dữ liệu được tiếp nhận qua AWS IoT Core, lưu trữ trong S3 data lake và xử lý bởi AWS Glue Crawlers và ETL jobs để chuyển đổi và tải vào một S3 bucket khác cho mục đích phân tích. Lambda và API Gateway xử lý bổ sung, trong khi Amplify với Next.js cung cấp bảng điều khiển được bảo mật bởi Cognito.  
+Trong cuộc sống hiện đại, việc lựa chọn món ăn, tìm công thức nấu nướng và chuẩn bị nguyên liệu là những nhu cầu thường xuyên. Tuy nhiên, thông tin về món ăn, cách chế biến và địa điểm mua nguyên liệu thường nằm rải rác trên nhiều nền tảng. Người dùng có thể mất thời gian để lựa chọn món phù hợp với nguyên liệu sẵn có, ngân sách và điều kiện mua sắm của mình.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+Bếp Thông Minh (Smart Kitchen) là nền tảng web hỗ trợ người dùng khám phá món ăn, tham khảo công thức nấu ăn tại nhà và tìm kiếm địa điểm cung cấp nguyên liệu theo vị trí hoặc địa chỉ được nhập. Dự án sử dụng các dịch vụ AWS để triển khai giao diện, xử lý yêu cầu, lưu trữ dữ liệu, kết nối dịch vụ tìm kiếm địa điểm và tích hợp khả năng xử lý AI thông qua Amazon Bedrock.
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+## 1.2. Động lực và mục tiêu
 
-*Dịch vụ AWS sử dụng*  
-- *AWS IoT Core*: Tiếp nhận dữ liệu MQTT từ 5 trạm, mở rộng lên 15.  
-- *AWS Lambda*: Xử lý dữ liệu và kích hoạt Glue jobs (2 hàm).  
-- *Amazon API Gateway*: Giao tiếp với ứng dụng web.  
-- *Amazon S3*: Lưu trữ dữ liệu thô (data lake) và dữ liệu đã xử lý (2 bucket).  
-- *AWS Glue*: Crawlers lập chỉ mục dữ liệu, ETL jobs chuyển đổi và tải dữ liệu.  
-- *AWS Amplify*: Lưu trữ giao diện web Next.js.  
-- *Amazon Cognito*: Quản lý quyền truy cập cho người dùng phòng lab.  
+- Đơn giản hóa việc khám phá món ăn và lựa chọn công thức phù hợp với nhu cầu.
+- Cung cấp thông tin nguyên liệu và hướng dẫn chế biến để hỗ trợ người dùng nấu ăn tại nhà.
+- Hỗ trợ tìm kiếm địa điểm bán nguyên liệu gần vị trí hiện tại hoặc địa chỉ do người dùng cung cấp.
+- Xây dựng ứng dụng web trên AWS theo kiến trúc có thể bảo trì và mở rộng.
+- Tích hợp Amazon Bedrock để bổ sung khả năng xử lý yêu cầu bằng AI tạo sinh trong ứng dụng.
 
-*Thiết kế thành phần*  
-- *Thiết bị biên*: Raspberry Pi thu thập và lọc dữ liệu cảm biến, gửi tới IoT Core.  
-- *Tiếp nhận dữ liệu*: AWS IoT Core nhận tin nhắn MQTT từ thiết bị biên.  
-- *Lưu trữ dữ liệu*: Dữ liệu thô lưu trong S3 data lake; dữ liệu đã xử lý lưu ở một S3 bucket khác.  
-- *Xử lý dữ liệu*: AWS Glue Crawlers lập chỉ mục dữ liệu; ETL jobs chuyển đổi để phân tích.  
-- *Giao diện web*: AWS Amplify lưu trữ ứng dụng Next.js cho bảng điều khiển và phân tích thời gian thực.  
-- *Quản lý người dùng*: Amazon Cognito giới hạn 5 tài khoản hoạt động.  
+## 1.3. Kết quả dự kiến
 
-### 4. Triển khai kỹ thuật  
-*Các giai đoạn triển khai*  
-Dự án gồm 2 phần — thiết lập trạm thời tiết biên và xây dựng nền tảng thời tiết — mỗi phần trải qua 4 giai đoạn:  
-1. *Nghiên cứu và vẽ kiến trúc*: Nghiên cứu Raspberry Pi với cảm biến ESP32 và thiết kế kiến trúc AWS Serverless (1 tháng trước kỳ thực tập).  
-2. *Tính toán chi phí và kiểm tra tính khả thi*: Sử dụng AWS Pricing Calculator để ước tính và điều chỉnh (Tháng 1).  
-3. *Điều chỉnh kiến trúc để tối ưu chi phí/giải pháp*: Tinh chỉnh (ví dụ tối ưu Lambda với Next.js) để đảm bảo hiệu quả (Tháng 2).  
-4. *Phát triển, kiểm thử, triển khai*: Lập trình Raspberry Pi, AWS services với CDK/SDK và ứng dụng Next.js, sau đó kiểm thử và đưa vào vận hành (Tháng 2–3).  
+- Website có thể được truy cập qua địa chỉ triển khai trên AWS.
+- Người dùng có thể xem, tìm kiếm và lọc dữ liệu công thức được cung cấp trong hệ thống.
+- Người dùng có thể xem nguyên liệu và hướng dẫn chế biến của món ăn.
+- Hệ thống có thể tiếp nhận yêu cầu tìm kiếm địa điểm và trả kết quả từ Amazon Location Service.
+- Hệ thống có thể gửi yêu cầu đến Amazon Bedrock và nhận phản hồi từ mô hình AI được tích hợp.
+- giao diện người dùng, phần xử lý phía máy chủ, cơ sở dữ liệu và dịch vụ AI được kết nối thông qua các dịch vụ AWS.
 
-*Yêu cầu kỹ thuật*  
-- *Trạm thời tiết biên*: Cảm biến (nhiệt độ, độ ẩm, lượng mưa, tốc độ gió), vi điều khiển ESP32, Raspberry Pi làm thiết bị biên. Raspberry Pi chạy Raspbian, sử dụng Docker để lọc dữ liệu và gửi 1 MB/ngày/trạm qua MQTT qua Wi-Fi.  
-- *Nền tảng thời tiết*: Kiến thức thực tế về AWS Amplify (lưu trữ Next.js), Lambda (giảm thiểu do Next.js xử lý), AWS Glue (ETL), S3 (2 bucket), IoT Core (gateway và rules), và Cognito (5 người dùng). Sử dụng AWS CDK/SDK để lập trình (ví dụ IoT Core rules tới S3). Next.js giúp giảm tải Lambda cho ứng dụng web fullstack.  
+# 2. Kiến trúc giải pháp
 
-### 5. Lộ trình & Mốc triển khai  
-- *Trước thực tập (Tháng 0)*: 1 tháng lên kế hoạch và đánh giá trạm cũ.  
-- *Thực tập (Tháng 1–3)*:  
-    - Tháng 1: Học AWS và nâng cấp phần cứng.  
-    - Tháng 2: Thiết kế và điều chỉnh kiến trúc.  
-    - Tháng 3: Triển khai, kiểm thử, đưa vào sử dụng.  
-- *Sau triển khai*: Nghiên cứu thêm trong vòng 1 năm.  
+## 2.1. Tổng quan kiến trúc
 
-### 6. Ước tính ngân sách  
-Có thể xem chi phí trên [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01)  
-Hoặc tải [tệp ước tính ngân sách](../attachments/budget_estimation.pdf).  
+Bếp Thông Minh sử dụng kiến trúc web serverless trên AWS. Các tệp giao diện người dùng và tài nguyên tĩnh được lưu trữ trên Amazon S3; Amazon CloudFront được cấu hình làm lớp phân phối nội dung phía trước S3. Khi người dùng truy cập website qua tên miền CloudFront, CloudFront tiếp nhận yêu cầu, phân phối nội dung từ nguồn gốc S3 và có thể lưu nội dung vào bộ nhớ đệm tại các điểm hiện diện để cải thiện tốc độ tải trang. Các yêu cầu nghiệp vụ phát sinh khi người dùng thao tác trên giao diện được frontend gửi trực tiếp đến Amazon API Gateway qua HTTPS, sau đó chuyển đến AWS Lambda để xử lý. Lambda truy xuất dữ liệu công thức từ Amazon DynamoDB, gọi Amazon Location Service khi cần tìm kiếm địa điểm hoặc gọi Amazon Bedrock khi cần thực hiện chức năng AI.
 
-*Chi phí hạ tầng*  
-- AWS Lambda: 0,00 USD/tháng (1.000 request, 512 MB lưu trữ).  
-- S3 Standard: 0,15 USD/tháng (6 GB, 2.100 request, 1 GB quét).  
-- Truyền dữ liệu: 0,02 USD/tháng (1 GB vào, 1 GB ra).  
-- AWS Amplify: 0,35 USD/tháng (256 MB, request 500 ms).  
-- Amazon API Gateway: 0,01 USD/tháng (2.000 request).  
-- AWS Glue ETL Jobs: 0,02 USD/tháng (2 DPU).  
-- AWS Glue Crawlers: 0,07 USD/tháng (1 crawler).  
-- MQTT (IoT Core): 0,08 USD/tháng (5 thiết bị, 45.000 tin nhắn).  
+Amazon Bedrock được tích hợp vào luồng xử lý phần xử lý phía máy chủ. AWS Lambda đóng vai trò trung gian tiếp nhận yêu cầu, gửi nội dung đến mô hình AI và xử lý phản hồi trước khi trả kết quả về giao diện người dùng. Cách tổ chức này giúp thông tin xác thực và quyền truy cập dịch vụ được quản lý ở phía phần xử lý phía máy chủ thay vì đặt trong mã nguồn giao diện người dùng.
 
-*Tổng*: 0,7 USD/tháng, 8,40 USD/12 tháng  
-- *Phần cứng*: 265 USD một lần (Raspberry Pi 5 và cảm biến).  
+## 2.2. Sơ đồ kiến trúc AWS
+![Sơ đồ kiến trúc AWS](/images/2-Proposal/DemoFinalWorkShop.drawio.png)
 
-### 7. Đánh giá rủi ro  
-*Ma trận rủi ro*  
-- Mất mạng: Ảnh hưởng trung bình, xác suất trung bình.  
-- Hỏng cảm biến: Ảnh hưởng cao, xác suất thấp.  
-- Vượt ngân sách: Ảnh hưởng trung bình, xác suất thấp.  
 
-*Chiến lược giảm thiểu*  
-- Mạng: Lưu trữ cục bộ trên Raspberry Pi với Docker.  
-- Cảm biến: Kiểm tra định kỳ, dự phòng linh kiện.  
-- Chi phí: Cảnh báo ngân sách AWS, tối ưu dịch vụ.  
 
-*Kế hoạch dự phòng*  
-- Quay lại thu thập thủ công nếu AWS gặp sự cố.  
-- Sử dụng CloudFormation để khôi phục cấu hình liên quan đến chi phí.  
 
-### 8. Kết quả kỳ vọng  
-*Cải tiến kỹ thuật*: Dữ liệu và phân tích thời gian thực thay thế quy trình thủ công. Có thể mở rộng tới 10–15 trạm.  
-*Giá trị dài hạn*: Nền tảng dữ liệu 1 năm cho nghiên cứu AI, có thể tái sử dụng cho các dự án tương lai.
+
+## 2.3. Các dịch vụ AWS và vai trò
+
+| AWS Service | Vai trò trong dự án |
+|---|---|
+| Amazon S3 | Lưu trữ các tệp giao diện người dùng và tài nguyên tĩnh của website. |
+| Amazon CloudFront | Là lớp phân phối nội dung (CDN) phía trước Amazon S3, tiếp nhận yêu cầu truy cập website, phân phối các tệp frontend từ S3 và hỗ trợ tăng tốc tải nội dung thông qua bộ nhớ đệm tại các điểm hiện diện. Người dùng truy cập website qua tên miền CloudFront bằng HTTPS. |
+| Amazon API Gateway | Cung cấp địa chỉ API để giao diện người dùng giao tiếp với phần xử lý phía máy chủ. |
+| AWS Lambda | Tiếp nhận và xử lý logic nghiệp vụ, truy xuất dữ liệu và điều phối lời gọi đến các dịch vụ AWS. |
+| Amazon DynamoDB | Lưu trữ và truy xuất dữ liệu công thức nấu ăn. |
+| Amazon Location Service | Hỗ trợ tìm kiếm địa điểm/cửa hàng theo vị trí hoặc địa chỉ. |
+| Amazon Bedrock | Cung cấp quyền truy cập mô hình AI tạo sinh; dự án tích hợp Amazon Nova Micro để xử lý yêu cầu AI từ ứng dụng. |
+
+## 2.4. Các luồng hoạt động chính của ứng dụng
+
+- **Truy cập website:** Người dùng mở tên miền CloudFront qua HTTPS. CloudFront tiếp nhận yêu cầu và phân phối các tệp giao diện người dùng từ S3; nội dung có thể được lưu trong bộ nhớ đệm tại các điểm hiện diện để giảm thời gian tải khi được yêu cầu lại.
+- **Khám phá công thức:** giao diện người dùng gửi yêu cầu đến API Gateway; Lambda xử lý và truy xuất dữ liệu công thức từ DynamoDB trước khi trả kết quả.
+- **Tìm kiếm địa điểm:** Người dùng cung cấp vị trí GPS hoặc nhập địa chỉ; Lambda gọi Amazon Location Service và trả kết quả về giao diện người dùng.
+- **Xử lý yêu cầu AI:** giao diện người dùng gửi yêu cầu đến API Gateway; Lambda tiếp nhận và kiểm tra dữ liệu đầu vào, sau đó gọi Amazon Bedrock với mô hình Amazon Nova Micro. Lambda tiếp nhận phản hồi từ mô hình, xử lý kết quả và trả về giao diện người dùng.
+
+## 2.5. Khả năng mở rộng và độ tin cậy
+
+Việc sử dụng các dịch vụ được AWS quản lý/không máy chủ giúp giảm nhu cầu tự quản lý máy chủ và cho phép từng thành phần mở rộng theo nhu cầu sử dụng. Amazon S3 đảm nhiệm lưu trữ frontend, còn CloudFront phân phối nội dung từ S3 đến người dùng và hỗ trợ bộ nhớ đệm ở lớp biên; API Gateway và Lambda xử lý các yêu cầu nghiệp vụ của ứng dụng; DynamoDB cung cấp lớp lưu trữ dữ liệu. Amazon Location Service và Amazon Bedrock được gọi khi ứng dụng cần chức năng tìm kiếm địa điểm hoặc xử lý AI.
+
+Các cơ chế giám sát, cảnh báo, sao lưu và tối ưu hiệu suất sẽ được xem xét theo nhu cầu vận hành và ngân sách. Đối với Amazon Bedrock, cần kiểm soát số lượng yêu cầu, hạn mức sử dụng và thời gian phản hồi để hạn chế ảnh hưởng đến trải nghiệm người dùng.
+
+# 3. Thiết kế bảo mật
+
+
+## 3.1. Quản lý danh tính và quyền truy cập
+
+- Áp dụng nguyên tắc quyền tối thiểu cần thiết, chỉ cấp quyền cần thiết cho từng thành phần.
+- Sử dụng vai trò IAM cho Lambda khi truy cập DynamoDB, Amazon Location Service và Amazon Bedrock.
+- Cấp quyền gọi mô hình Bedrock ở mức cần thiết, chẳng hạn quyền thực hiện thao tác InvokeModel đối với mô hình được sử dụng.
+- Không đưa khóa truy cập (Access Key), khóa bí mật (Secret Key) hoặc thông tin xác thực vào mã nguồn giao diện người dùng hoặc repository công khai.
+- Tách biệt quyền quản trị tài nguyên AWS với quyền thực thi của ứng dụng.
+
+## 3.2. Bảo vệ dữ liệu và API
+
+- Ưu tiên sử dụng HTTPS cho kết nối giữa người dùng và website/API; người dùng truy cập website thông qua tên miền CloudFront bằng HTTPS.
+- Kiểm tra và xác thực dữ liệu đầu vào trước khi xử lý.
+- Không trả thông tin nhạy cảm, thông tin xác thực hoặc chi tiết nội bộ trong phản hồi API.
+- Cấu hình CORS, xác thực và giới hạn tần suất truy cập phù hợp với yêu cầu thực tế của ứng dụng.
+- Kiểm soát nội dung gửi đến Amazon Bedrock, tránh gửi thông tin cá nhân hoặc dữ liệu nhạy cảm không cần thiết.
+- Xử lý và kiểm tra phản hồi từ mô hình AI trước khi trả kết quả về giao diện người dùng.
+
+## 3.3. Giám sát và ghi nhật ký
+
+Amazon CloudWatch có thể được sử dụng để theo dõi nhật ký, lỗi và các chỉ số của Lambda cũng như những thành phần AWS liên quan. Đối với luồng tích hợp Bedrock, cần theo dõi lỗi gọi mô hình, thời gian phản hồi và tình trạng vượt hạn mức. Việc thiết lập cảnh báo, thời gian lưu nhật ký và mức độ giám sát sẽ được điều chỉnh theo nhu cầu vận hành và ngân sách. Không ghi thông tin xác thực hoặc dữ liệu nhạy cảm của người dùng vào nhật ký.
+
+# 4. Phạm vi và sản phẩm bàn giao của dự án
+
+## 4.1. Phạm vi thực hiện
+
+### A. Khám phá món ăn và công thức nấu ăn
+
+- Hiển thị danh sách công thức nấu ăn.
+- Hỗ trợ tìm kiếm và khám phá món ăn theo các tiêu chí được thiết kế.
+- Hiển thị thông tin nguyên liệu và hướng dẫn chế biến.
+- Cung cấp dữ liệu công thức để người dùng tham khảo khi nấu ăn tại nhà.
+
+### B. Tìm kiếm địa điểm bán nguyên liệu gần đây
+
+- Cho phép người dùng cung cấp vị trí hiện tại nếu cấp quyền GPS hoặc nhập địa chỉ thủ công.
+- Gửi yêu cầu tìm kiếm địa điểm đến phần xử lý phía máy chủ.
+- Sử dụng Amazon Location Service để tìm kiếm địa điểm phù hợp và trả kết quả cho giao diện.
+
+### C. Tích hợp AI với Amazon Bedrock
+
+- Tích hợp Amazon Bedrock vào phần xử lý phía máy chủ để xử lý yêu cầu AI từ ứng dụng.
+- Sử dụng mô hình Amazon Nova Micro thông qua luồng xử lý phần xử lý phía máy chủ.
+- Tiếp nhận yêu cầu từ giao diện người dùng, gửi đến mô hình AI và trả phản hồi về giao diện người dùng.
+- Xử lý lỗi phát sinh trong quá trình gọi mô hình và phản hồi từ dịch vụ.
+
+## 4.2. Phạm vi phát triển trong tương lai
+
+- Mở rộng khả năng cá nhân hóa gợi ý dựa trên nguyên liệu, ngân sách, sở thích và nhu cầu của người dùng.
+- Cải thiện khả năng kết hợp dữ liệu công thức với phản hồi AI để hỗ trợ người dùng lập kế hoạch bữa ăn.
+- Mở rộng khả năng khám phá dịch vụ ăn uống và kết nối với nhà hàng/đơn vị kinh doanh.
+
+## 4.3. Ngoài phạm vi dự án
+
+- Thanh toán trực tuyến hoàn chỉnh.
+- Quản lý kho hàng và đồng bộ tồn kho theo thời gian thực.
+- Hệ thống vận chuyển hoặc theo dõi đơn hàng thực tế.
+- Quản lý toàn diện hoạt động kinh doanh của nhà hàng.
+- Phân tích dữ liệu quy mô lớn.
+
+## 4.4. Các sản phẩm bàn giao
+
+- Website Bếp Thông Minh được triển khai trên AWS.
+- Giao diện người dùng được lưu trữ trên Amazon S3 và phân phối qua Amazon CloudFront.
+- Backend/API sử dụng API Gateway và AWS Lambda.
+- Cơ sở dữ liệu công thức trên Amazon DynamoDB.
+- Chức năng tìm kiếm địa điểm tích hợp Amazon Location Service.
+- Chức năng AI tích hợp Amazon Bedrock với mô hình Amazon Nova Micro.
+- Tài liệu Proposal và sơ đồ kiến trúc tổng thể.
+
+
+# 5. Lộ trình triển khai
+
+Dự án được chia thành các giai đoạn chính. Thời gian cụ thể có thể điều chỉnh theo tiến độ thực tế và nguồn lực của nhóm.
+
+| Giai đoạn | Công việc chính | Kết quả |
+|---|---|---|
+| Giai đoạn 1: Lập kế hoạch | Xác định vấn đề, mục tiêu, yêu cầu và phạm vi dự án. | Yêu cầu và kế hoạch dự án. |
+| Giai đoạn 2: Phát triển ứng dụng | Xây dựng giao diện, phần xử lý phía máy chủ và các chức năng cốt lõi. | giao diện người dùng và phần xử lý phía máy chủ. |
+| Giai đoạn 3: Hạ tầng AWS và dữ liệu | Thiết lập S3, CloudFront, API Gateway, Lambda và DynamoDB. | Các thành phần ứng dụng được triển khai và kết nối. |
+| Giai đoạn 4: Tích hợp dịch vụ bên ngoài và AI | Tích hợp Amazon Location Service và Amazon Bedrock; cấu hình quyền truy cập cần thiết, kết nối mô hình Amazon Nova Micro với phần xử lý phía máy chủ và kiểm tra luồng phản hồi. | Chức năng tìm kiếm địa điểm và chức năng AI được tích hợp vào ứng dụng. |
+| Giai đoạn 5: Hoàn thiện tài liệu và bàn giao | Hoàn thiện tài liệu dự án, kiến trúc, chi phí và tài liệu Workshop. | Bộ tài liệu dự án. |
+
+Mốc thời gian bắt đầu/kết thúc sẽ được bổ sung theo lịch triển khai thực tế; nhật ký công việc theo tuần được trình bày trong Nhật ký công việc.
+
+# 6. Ước tính chi phí AWS
+
+## 6.1. Cơ sở và giả định ước tính
+
+Chi phí được ước tính cho quy mô khoảng **100–500 người dùng hoạt động mỗi tháng**, triển khai tại khu vực **Asia Pacific (Singapore) – ap-southeast-1**. Đây là kịch bản vận hành quy mô nhỏ đến trung bình, sử dụng kiến trúc serverless và chỉ tính các dịch vụ đang có trong kiến trúc Bếp Thông Minh.
+
+Các giả định sử dụng để lập dự toán:
+
+- Khoảng 100–500 người dùng hoạt động trong một tháng.
+- Tổng số yêu cầu đến API Gateway khoảng 20.000–100.000 request/tháng.
+- Số lượt tìm kiếm địa điểm qua Amazon Location Service khoảng 1.000–5.000 request/tháng.
+- Số lượt gọi Amazon Bedrock giả định là 50 lượt/người dùng/tháng, tương ứng 5.000 lượt cho 100 người dùng và 25.000 lượt cho 500 người dùng. Mỗi lượt sử dụng trung bình 1.000 token đầu vào và 500 token đầu ra.
+- Dữ liệu frontend, hình ảnh và dữ liệu công thức có dung lượng nhỏ; không sử dụng máy chủ EC2 chạy liên tục.
+- Lưu lượng CloudFront giả định là 20 GB và 20.000 HTTPS request/tháng cho kịch bản 100 người dùng; 100 GB và 100.000 HTTPS request/tháng cho kịch bản 500 người dùng. Chi phí trong bảng được ghi theo kết quả AWS Pricing Calculator trước khi xem xét ưu đãi hoặc hạn mức miễn phí đủ điều kiện.
+
+## 6.2. Dự toán chi phí theo quy mô người dùng
+
+Bảng dưới đây tổng hợp chi phí ước tính theo **AWS Pricing Calculator** cho hai kịch bản 100 và 500 người dùng hoạt động mỗi tháng. Tất cả mức giá được tính theo khu vực **Asia Pacific (Singapore) – ap-southeast-1**, đơn vị USD/tháng.
+
+| AWS Service | 100 người dùng/tháng (USD) | 500 người dùng/tháng (USD) |
+|---|---:|---:|
+| Amazon S3 | 0.04 | 0.18 |
+| Amazon CloudFront | 2.42 | 12.12 |
+| Amazon API Gateway (REST API) | 0.09 | 0.43 |
+| AWS Lambda | 0.01 | 0.05 |
+| Amazon DynamoDB | 0.01 | 0.05 |
+| Amazon Bedrock (Nova Micro) | 0.71 | 3.53 |
+| Amazon Location Service | 0.55 | 2.75 |
+| Amazon CloudWatch | 0.07 | 0.37 |
+| **Tổng chi phí ước tính/tháng** | **3.90** | **19.48** |
+
+Theo kết quả hiện tại của AWS Pricing Calculator, chi phí ước tính là **3.90 USD/tháng cho 100 người dùng** và **19.48 USD/tháng cho 500 người dùng**. Đây là kết quả dự toán dựa trên lượng sử dụng giả định, không phải hóa đơn thực tế.
+
+**Chi tiết cơ sở tính toán:**
+
+- **Amazon S3:** dung lượng lưu trữ 1 GB/5 GB; Tier 1 requests 500/2.500; Tier 2 requests 20.000/100.000.
+- **Amazon CloudFront:** dữ liệu truyền ra Internet 20 GB/100 GB; HTTPS requests 20.000/100.000.
+- **Amazon API Gateway:** 20.000/100.000 REST API requests.
+- **AWS Lambda:** 625/3.125 GB-second, giả định bộ nhớ 128 MB và thời gian thực thi trung bình 1 giây.
+- **Amazon DynamoDB:** 10.000/50.000 read request units và 10.000/50.000 write request units.
+- **Amazon Bedrock:** 5.000/25.000 đơn vị 1.000 input tokens và 2.500/12.500 đơn vị 1.000 output tokens; giả định 50 lượt gọi/người dùng/tháng, mỗi lượt 1.000 input tokens và 500 output tokens.
+- **Amazon Location Service:** 100/500 Geocode requests và 1.000/5.000 SearchNearby requests.
+- **Amazon CloudWatch:** 0.1/0.5 GB log ingestion và 0.1/0.5 GB-Mo log storage.
+
+Chi phí CloudFront trong bảng phản ánh số tiền Calculator đang hiển thị cho các mức sử dụng đã nhập. Khi xác định ngân sách thực tế, cần kiểm tra lại gói giá, điều kiện Free Tier/ưu đãi và hạn mức miễn phí áp dụng cho tài khoản; không mặc định các khoản này được miễn phí nếu chưa xác minh.
+
+## 6.3. Các yếu tố có thể làm thay đổi chi phí
+
+- **Amazon Location Service:** số lượt tìm kiếm cửa hàng/địa điểm và loại dữ liệu được yêu cầu trong mỗi request.
+- **Amazon Bedrock:** số lượt gọi mô hình Nova Micro và lượng token đầu vào/đầu ra của từng yêu cầu.
+- **Amazon CloudFront:** dung lượng dữ liệu phân phối và số lượng HTTPS request; cần đối chiếu kết quả Calculator với gói giá và hạn mức miễn phí đủ điều kiện của tài khoản AWS.
+- **API Gateway, Lambda và DynamoDB:** số lượng request, thời gian thực thi, dung lượng dữ liệu và cách truy vấn.
+- **Amazon S3 và CloudWatch:** dung lượng lưu trữ, số lượt đọc/ghi và thời gian lưu nhật ký.
+
+## 6.4. Biện pháp kiểm soát và tối ưu chi phí
+
+- Theo dõi AWS Billing định kỳ và thiết lập cảnh báo ngân sách.
+- Hạn chế gọi Amazon Location Service lặp lại khi người dùng chưa thay đổi vị trí hoặc tiêu chí tìm kiếm.
+- Kiểm soát số lần gọi Amazon Bedrock, giới hạn độ dài prompt và số token phản hồi.
+- Tối ưu bộ nhớ đệm CloudFront đối với các tệp frontend tĩnh.
+- Tối ưu truy vấn DynamoDB và thời gian thực thi Lambda.
+- Định kỳ đối chiếu dự toán với chi phí thực tế để điều chỉnh ngân sách theo lượng người dùng.
+
+Dự toán này được lập nhằm mô tả quy mô chi phí có thể phát sinh khi ứng dụng phục vụ 100–500 người dùng mỗi tháng. Khi có số liệu vận hành thực tế, cần cập nhật lại các giả định trong AWS Pricing Calculator để có kết quả sát hơn với mức sử dụng của hệ thống.
+
+# 7. Quản lý dự án, rủi ro và kết luận
+
+## 7.1. Người phụ trách và nhóm dự án
+
+|   Thành viên   | Vai trò | Trách nhiệm |
+|-----|---|---|
+|   Huỳnh&nbsp;Minh&nbsp;Hiệp  | Frontend Developer & UI/UX Designer | Thiết kế và phát triển giao diện website; xây dựng chức năng tìm kiếm, lọc món ăn, hiển thị công thức và kết nối frontend với backend. |
+|   Nguyễn&nbsp;Nguyên&nbsp;Vũ  | Backend Developer |	Phát triển backend bằng AWS Lambda và API Gateway; xây dựng API, xử lý logic tìm kiếm và gợi ý món ăn; tích hợp Amazon Bedrock để hỗ trợ chatbot AI. |
+|   Nguyễn&nbsp;Mạnh&nbsp;Dũng  | AWS Cloud Engineer & Database Developer | Cấu hình và triển khai các dịch vụ AWS như S3, CloudFront, DynamoDB, Amazon Location Service và CloudWatch; quản lý dữ liệu công thức, hỗ trợ kiểm thử và vận hành hệ thống. |
+
+## 7.2. Rủi ro và biện pháp giảm thiểu
+
+| Rủi ro | Ảnh hưởng | Biện pháp giảm thiểu |
+|---|---|---|
+| Hạn mức dịch vụ AWS | Một số dịch vụ hoặc mô hình có thể gặp giới hạn về quota hoặc quyền truy cập. | Theo dõi hạn mức, kiểm tra quyền truy cập và điều chỉnh mức sử dụng phù hợp. |
+| Lỗi API | giao diện người dùng không nhận được dữ liệu từ phần xử lý phía máy chủ. | Ghi nhật ký, xử lý ngoại lệ và kiểm tra trạng thái API. |
+| Hiệu suất cơ sở dữ liệu | Truy vấn có thể chậm khi dữ liệu hoặc lượng truy cập tăng. | Tối ưu thiết kế dữ liệu và cách truy vấn. |
+| Độ chính xác của kết quả địa điểm | Kết quả địa điểm có thể không đầy đủ hoặc chưa chính xác. | Cho phép nhập địa chỉ thủ công và xử lý kết quả trả về. |
+| Chất lượng phản hồi AI | Phản hồi do mô hình AI tạo ra có thể chưa chính xác hoặc chưa phù hợp với yêu cầu. | Kiểm tra dữ liệu đầu vào, xử lý phản hồi và thông báo phù hợp cho người dùng. |
+| Khả năng hoạt động và giới hạn của AI | Yêu cầu AI có thể thất bại khi dịch vụ không khả dụng hoặc chạm giới hạn sử dụng. | Xử lý lỗi, theo dõi hạn mức và cung cấp thông báo khi không thể nhận phản hồi. |
+| Chi phí AWS phát sinh ngoài dự kiến | Chi phí tăng khi lưu lượng hoặc mức sử dụng dịch vụ vượt dự kiến. | Theo dõi Billing, kiểm soát request/token và thiết lập cảnh báo ngân sách. |
+
+## 7.3. Kết luận
+
+Bếp Thông Minh hướng đến việc cung cấp một nền tảng hỗ trợ khám phá món ăn, tham khảo công thức nấu ăn và tìm kiếm địa điểm cung cấp nguyên liệu. Việc sử dụng Amazon S3, CloudFront, API Gateway, AWS Lambda, DynamoDB và Amazon Location Service tạo nền tảng để triển khai các chức năng cốt lõi trên AWS. Bên cạnh đó, Amazon Bedrock với mô hình Amazon Nova Micro đã được tích hợp vào phần xử lý phía máy chủ, bổ sung khả năng xử lý yêu cầu bằng AI tạo sinh cho ứng dụng.
+
+Bản đề xuất này xác định bối cảnh, mục tiêu, kiến trúc, phạm vi, yêu cầu bảo mật, kế hoạch triển khai, chi phí và các rủi ro chính của dự án. Các minh chứng chi tiết về quá trình tích hợp, mã nguồn và kết quả kiểm thử được trình bày trong phần Thực hành/Minh chứng triển khai.
+
+---
+
+## Thông tin dự án
+
+| Thông tin | Chi tiết |
+|---|---|
+| Dự án | Bếp Thông Minh – Smart Kitchen Platform |
+| Kho mã nguồn | https://github.com/veexto/AWS-Final-Project-Cooking/tree/main |
+| Website đã triển khai | https://d18x1ou8x7botm.cloudfront.net/ |
+| Khu vực AWS | ap-southeast-1 (Singapore) |
+| Ngày lập | Tháng 11/2026 |
